@@ -1,0 +1,46 @@
+[alias]
+  co = checkout
+  b  = branch
+  st = status
+  ap = add --patch
+  pa = pull --all
+  l  = log --pretty=colored
+  lt = log --pretty=colored-tags
+  c  = commit
+  cm = commit -m
+  d  = diff
+  ds = diff --staged
+  a  = add
+  ri = rebase -i
+  bs = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+[pretty]
+  colored = format:%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset
+  colored-tags = format:%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)%an%C(bold red)%d%Creset
+[user]
+  name = Gabe Jackson
+  email = gj@mail.co.de
+[push]
+  default = current
+[core]
+  excludesfile = ~/.gitignore_global
+  autocrlf = input
+[core "whitespace"]
+  tabwidth = 2
+[merge]
+  ff = only
+[commit]
+  template = ~/.gitmessage
+[fetch]
+  prune = true
+[rebase]
+  autosquash = true
+[diff "ruby"]
+  funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
+[color "diff"]
+  context = normal
+  meta = dim
+[diff]
+  indentHeuristic = true
+  algorithm = minimal
+  context = 0
+  interHunkContext = 5
