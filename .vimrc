@@ -6,35 +6,37 @@ endif
 
 
 call plug#begin('~/.vim/vim-plugins')
+" Language packages
+Plug 'pangloss/vim-javascript',   { 'for': ['javascript'] }
+Plug 'vim-ruby/vim-ruby',         { 'for': ['ruby'] }
+Plug 'tpope/vim-rails',           { 'for': ['ruby'] }
+Plug 'tpope/vim-rake',            { 'for': ['ruby'] }
+Plug 'slim-template/vim-slim',    { 'for': ['slim'] }
+" Plug 'slashmili/alchemist.vim',   { 'for': ['elixir', 'eelixir'] }
+Plug 'elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
+
 " Utilities
 Plug 'mileszs/ack.vim'
-Plug 'Valloric/YouCompleteMe'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --js-completer' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'w0rp/ale'
 Plug 'vim-scripts/tComment'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'christoomey/vim-run-interactive'
 Plug 'janko-m/vim-test'
-Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-bundler', { 'for': ['ruby'] }
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'junegunn/vim-easy-align'
 
 " Themes
 Plug 'morhetz/gruvbox'
-
-" Language packages
-Plug 'pangloss/vim-javascript'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'elixir-editors/vim-elixir'
-Plug 'slashmili/alchemist.vim'
-Plug 'vim-ruby/vim-ruby'
-Plug 'slim-template/vim-slim'
 call plug#end()
 
 
@@ -63,9 +65,12 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 
-let g:ycm_max_num_candidates = 1
-let g:ycm_max_num_identifier_candidates = 1
-let g:ycm_log_level = 'error'
+" let g:alchemist#elixir_erlang_src = '/usr/local/share/src'
+
+" let g:ycm_max_num_candidates = 1
+" let g:ycm_max_num_identifier_candidates = 1
+let g:ycm_keep_logfiles = 1
+let g:ycm_log_level = 'debug'
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 
 
