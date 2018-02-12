@@ -4,7 +4,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 call plug#begin('~/.vim/vim-plugins')
 " Language packages
 Plug 'pangloss/vim-javascript',   { 'for': ['javascript'] }
@@ -34,46 +33,44 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/vim-easy-align'
+Plug 'terryma/vim-multiple-cursors'
 
 " Themes
 Plug 'morhetz/gruvbox'
 call plug#end()
 
-
+" Change leader to spacebar
 let mapleader = ' '
 nnoremap <Space> <Nop>
 
+" Set the theme to gruvbox
 colorscheme gruvbox
 let g:gruvbox_contrast_dark     = 'hard'
 let g:gruvbox_improved_strings  = 1
 let g:gruvbox_improved_warnings = 1
 let g:gruvbox_guisp_fallback = 'fg'
 
-
+" pangloss/vim-javascript
 let g:javascript_plugin_flow = 1
 let g:javascript_conceal_function = "ƒ"
 set conceallevel=1
 
-
+" mileszs/ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
 nnoremap <Leader>a :Ack!<Space>
 
-
+" ctrlpvim/ctrlp.vim
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.git|vendor|tmp|node_modules)',
   \ 'file': '\v\.(exe|so|dll|log)$'
   \ }
 
-
-" let g:alchemist#elixir_erlang_src = '/usr/local/share/src'
-
-" let g:ycm_max_num_candidates = 1
-" let g:ycm_max_num_identifier_candidates = 1
-let g:ycm_keep_logfiles = 1
-let g:ycm_log_level = 'debug'
+" Valloric/YouCompleteMe
+let g:ycm_keep_logfiles = 1 " Just for debugging
+let g:ycm_log_level = 'debug' " Just for debugging
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 
-
+" janko-m/vim-test
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>
@@ -81,21 +78,35 @@ nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tg :TestVisit<CR>
 
-
+" christoomey/vim-run-interactive
 nnoremap <leader>r :RunInInteractiveShell<space>
 
+" junegunn/vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
+" terryma/vim-multiple-cursors
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-S-n>'
+let g:multi_cursor_prev_key='<C-S-u>'
+let g:multi_cursor_skip_key='<C-S-k>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" Use spaces instead of tabs; indent 2 spaces at a time
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
+" Don't expand tabs into spaces in Makefiles
 autocmd FileType make setlocal noexpandtab
 
-
+" Display tab and EOL characters
 set listchars=tab:▸\ ,eol:¬
 set list
 
-
+" Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -103,14 +114,14 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-
+" scrooloose/nerdtree
 map <C-n> :NERDTreeToggle<CR>
 
 " Switching between windows
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Chrome-style tab navigation
 map <D-S-]> gt
