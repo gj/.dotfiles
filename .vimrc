@@ -74,6 +74,14 @@ let g:ycm_log_level = 'debug'
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 
 
+" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tg :TestVisit<CR>
+
+
 nnoremap <leader>r :RunInInteractiveShell<space>
 
 
