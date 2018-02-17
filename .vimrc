@@ -57,7 +57,7 @@ set conceallevel=1
 
 " mileszs/ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <leader>a :Ack!<space>
 
 " ctrlpvim/ctrlp.vim
 let g:ctrlp_custom_ignore = {
@@ -89,9 +89,9 @@ nmap ga <Plug>(EasyAlign)
 
 " terryma/vim-multiple-cursors
 let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-S-n>'
-let g:multi_cursor_prev_key='<C-S-u>'
-let g:multi_cursor_skip_key='<C-S-k>'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-u>'
+let g:multi_cursor_skip_key='<C-k>'
 let g:multi_cursor_quit_key='<Esc>'
 
 " Use spaces instead of tabs; indent 2 spaces at a time
@@ -115,13 +115,25 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " scrooloose/nerdtree
-map <C-n> :NERDTreeToggle<CR>
+map <leader>n :NERDTreeToggle<CR>
 
 " Switching between windows
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap  <C-j> <C-w>j
+nnoremap  <C-k> <C-w>k
+nnoremap  <C-h> <C-w>h
+nnoremap  <C-l> <C-w>l
+nnoremap c<C-j>        :bel sp new<cr>
+nnoremap c<C-k>        :abo sp new<cr>
+nnoremap c<C-h>        :lefta vsp new<cr>
+nnoremap c<C-l>        :rightb vsp new<cr>
+nnoremap g<C-j> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
+nnoremap g<C-k> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
+nnoremap g<C-h> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
+nnoremap g<C-l> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
+nnoremap d<C-j> <C-w>j<C-w>c
+nnoremap d<C-k> <C-w>k<C-w>c
+nnoremap d<C-h> <C-w>h<C-w>c
+nnoremap d<C-l> <C-w>l<C-w>c
 
 " Chrome-style tab navigation
 map <D-S-]> gt
@@ -132,3 +144,7 @@ nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>. :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
+" Enable line numbers
+set number
+" set relativenumber

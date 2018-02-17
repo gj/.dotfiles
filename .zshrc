@@ -2,6 +2,8 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export HOMEBREW_NO_ANALYTICS=1
 
+export ERL_AFLAGS="-kernel shell_history enabled"
+
 # Initialize completion
 autoload -U compinit
 compinit -D
@@ -73,17 +75,9 @@ zle -N insert-selecta-path-in-command-line
 # Bind the key to the newly created widget
 bindkey "^S" "insert-selecta-path-in-command-line"
 
-
-# Get yo path right, dog
-# export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-# export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
-# export PATH="$HOME/bin:$PATH"
-# export PATH="./node_modules/.bin:$PATH"
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export NVM_DIR=~/.nvm
-# . $(brew --prefix nvm)/nvm.sh
