@@ -1,7 +1,15 @@
+# Enable ZSH Autosuggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Configure ZSH Autosuggestions
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
+bindkey '^ ' autosuggest-accept
+
+# Don't send analytics information to Homebrew
 export HOMEBREW_NO_ANALYTICS=1
 
+# Enable shell history in IEx
 export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Initialize completion
@@ -54,26 +62,26 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# By default, ^S freezes terminal output and ^Q resumes it. Disable that so
-# that those keys can be used for other things.
-unsetopt flowcontrol
-# Run Selecta in the current working directory, appending the selected path, if
-# any, to the current command, followed by a space.
-function insert-selecta-path-in-command-line() {
-  local selected_path
-  # Print a newline or we'll clobber the old prompt.
-  echo
-  # Find the path; abort if the user doesn't select anything.
-  selected_path=$(find * -type f | selecta) || return
-  # Append the selection to the current command buffer.
-  eval 'LBUFFER="$LBUFFER$selected_path "'
-  # Redraw the prompt since Selecta has drawn several new lines of text.
-  zle reset-prompt
-}
-# Create the zle widget
-zle -N insert-selecta-path-in-command-line
-# Bind the key to the newly created widget
-bindkey "^S" "insert-selecta-path-in-command-line"
+# # By default, ^S freezes terminal output and ^Q resumes it. Disable that so
+# # that those keys can be used for other things.
+# unsetopt flowcontrol
+# # Run Selecta in the current working directory, appending the selected path, if
+# # any, to the current command, followed by a space.
+# function insert-selecta-path-in-command-line() {
+#   local selected_path
+#   # Print a newline or we'll clobber the old prompt.
+#   echo
+#   # Find the path; abort if the user doesn't select anything.
+#   selected_path=$(find * -type f | selecta) || return
+#   # Append the selection to the current command buffer.
+#   eval 'LBUFFER="$LBUFFER$selected_path "'
+#   # Redraw the prompt since Selecta has drawn several new lines of text.
+#   zle reset-prompt
+# }
+# # Create the zle widget
+# zle -N insert-selecta-path-in-command-line
+# # Bind the key to the newly created widget
+# bindkey "^S" "insert-selecta-path-in-command-line"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"

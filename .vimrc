@@ -24,6 +24,7 @@ Plug 'w0rp/ale'
 Plug 'vim-scripts/tComment'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'christoomey/vim-run-interactive'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'janko-m/vim-test'
 Plug 'tpope/vim-bundler', { 'for': ['ruby'] }
 Plug 'tpope/vim-endwise'
@@ -118,22 +119,40 @@ autocmd BufWinLeave * call clearmatches()
 map <leader>n :NERDTreeToggle<CR>
 
 " Switching between windows
-nnoremap  <C-j> <C-w>j
-nnoremap  <C-k> <C-w>k
-nnoremap  <C-h> <C-w>h
-nnoremap  <C-l> <C-w>l
+nnoremap  <C-j> <C-w>j :let &winheight = &lines * 8 / 10<cr>
+nnoremap  <C-k> <C-w>k :let &winheight = &lines * 8 / 10<cr>
+nnoremap  <C-h> <C-w>h :let &winwidth = &columns * 8 / 10<cr>
+nnoremap  <C-l> <C-w>l :let &winwidth = &columns * 8 / 10<cr>
 nnoremap c<C-j>        :bel sp new<cr>
 nnoremap c<C-k>        :abo sp new<cr>
 nnoremap c<C-h>        :lefta vsp new<cr>
 nnoremap c<C-l>        :rightb vsp new<cr>
-nnoremap g<C-j> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
-nnoremap g<C-k> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
-nnoremap g<C-h> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
-nnoremap g<C-l> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
+" nnoremap g<C-j> <C-w>j :let &winwidth = &columns * 7 / 10<cr>
+" nnoremap g<C-k> <C-w>k :let &winwidth = &columns * 7 / 10<cr>
+" nnoremap g<C-h> <C-w>h :let &winwidth = &columns * 7 / 10<cr>
+" nnoremap g<C-l> <C-w>l :let &winwidth = &columns * 7 / 10<cr>
 nnoremap d<C-j> <C-w>j<C-w>c
 nnoremap d<C-k> <C-w>k<C-w>c
 nnoremap d<C-h> <C-w>h<C-w>c
 nnoremap d<C-l> <C-w>l<C-w>c
+
+" simplify resizing splits
+if has('unix')
+  nnoremap j <C-w>1+
+  nnoremap k <C-w>1-
+  nnoremap h <C-w>1>
+  nnoremap l <C-w>1<
+else
+  nnoremap <M-j> <C-w>1+
+  nnoremap <M-k> <C-w>1-
+  nnoremap <M-h> <C-w>1>
+  nnoremap <M-l> <C-w>1<
+endif
+
+" Open new split panes to right and bottom, which feels more natural than Vim’s default
+" https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
+set splitbelow
+set splitright
 
 " Chrome-style tab navigation
 map <D-S-]> gt
@@ -148,3 +167,13 @@ nnoremap <silent> <Leader>, :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 " Enable line numbers
 set number
 " set relativenumber
+
+" Autocomplete with tab
+" https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
+imap <Tab> <C-p>
+set complete=.,b,u,]
+set wildmode=longest,list:longest
+set completeopt=menu,preview
+
+" Automatically set buffers as 'hidden' when navigating away
+set hidden

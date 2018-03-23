@@ -5,7 +5,11 @@ alias dps='docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias v='vim .'
 alias hb='hub browse'
+
+# Docker
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"'
+alias dc='docker-compose'
+
 alias cssh='i2cssh -c'
 alias mkdir='mkdir -p'
 alias vimrc='vim ~/.vimrc'
@@ -21,3 +25,7 @@ alias https='hs --ssl --cert ~/.ssl/localhost.crt --key ~/.ssl/localhost.key -a 
 # Hidden File Visibility
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+
+# Quick switch between Python 2 and Python 3
+alias py2='pyenv global 2.7.14'
+alias py3='pyenv global 3.6.4'
