@@ -137,17 +137,17 @@ nnoremap d<C-h> <C-w>h<C-w>c
 nnoremap d<C-l> <C-w>l<C-w>c
 
 " simplify resizing splits
-if has('unix')
-  nnoremap j <C-w>1+
-  nnoremap k <C-w>1-
-  nnoremap h <C-w>1>
-  nnoremap l <C-w>1<
-else
-  nnoremap <M-j> <C-w>1+
-  nnoremap <M-k> <C-w>1-
-  nnoremap <M-h> <C-w>1>
-  nnoremap <M-l> <C-w>1<
-endif
+" if has('unix')
+"   nnoremap j <C-w>1+
+"   nnoremap k <C-w>1-
+"   nnoremap h <C-w>1>
+"   nnoremap l <C-w>1<
+" else
+"   nnoremap <M-j> <C-w>1+
+"   nnoremap <M-k> <C-w>1-
+"   nnoremap <M-h> <C-w>1>
+"   nnoremap <M-l> <C-w>1<
+" endif
 
 " Open new split panes to right and bottom, which feels more natural than Vim’s default
 " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
