@@ -1,3 +1,6 @@
+# Modify PATH per Stack's instructions (Haskell)
+export PATH="$PATH:$HOME/.local/bin"
+
 # Enable ZSH Autosuggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 

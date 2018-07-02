@@ -13,6 +13,7 @@ Plug 'tpope/vim-rake',            { 'for': ['ruby'] }
 Plug 'slim-template/vim-slim',    { 'for': ['slim'] }
 " Plug 'slashmili/alchemist.vim',   { 'for': ['elixir', 'eelixir'] }
 Plug 'elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
+Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell'] }
 
 " Utilities
 Plug 'mileszs/ack.vim'
@@ -177,3 +178,33 @@ set completeopt=menu,preview
 
 " Automatically set buffers as 'hidden' when navigating away
 set hidden
+
+" Per https://github.com/neovimhaskell/haskell-vim#installation
+syntax on
+filetype plugin indent on
+
+" ESLint setup per http://talum.github.io/blog/2017/12/28/setting-up-eslint-globally/
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\  'jsx': ['eslint']
+\}
+
+let g:ale_fixers = {
+\  'javascript': ['eslint'],
+\  'jsx': ['eslint']
+\}
+
+let g:ale_sign_column_always = 1
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 1
+" Enable completion where available.
+let g:ale_completion_enabled = 1
+" let g:ale_sign_error = '>>'
+" let g:ale_sign_warning = '--'
+" highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
+" highlight ALEWarning ctermbg=DarkMagenta
+" let g:airline#extensions#ale#enabled = 1
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_delay = 2000
+
