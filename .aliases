@@ -29,5 +29,6 @@ alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall 
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 # Quick switch between Python 2 and Python 3
-alias py2='pyenv global 2.7.14'
-alias py3='pyenv global 3.6.4'
+alias py2='pyenv global 2.7.15'
+alias py3='pyenv global 3.6.5'
+alias pysys='pyenv global system'
