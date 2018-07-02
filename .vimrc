@@ -36,6 +36,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'roman/golden-ratio'
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -117,13 +118,18 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " scrooloose/nerdtree
+autocmd vimenter * NERDTree
 map <leader>n :NERDTreeToggle<CR>
 
 " Switching between windows
-nnoremap  <C-j> <C-w>j :let &winheight = &lines * 8 / 10<cr>
-nnoremap  <C-k> <C-w>k :let &winheight = &lines * 8 / 10<cr>
-nnoremap  <C-h> <C-w>h :let &winwidth = &columns * 8 / 10<cr>
-nnoremap  <C-l> <C-w>l :let &winwidth = &columns * 8 / 10<cr>
+" nnoremap  <C-j> <C-w>j :let &winheight = &lines * 8 / 10<cr>
+" nnoremap  <C-k> <C-w>k :let &winheight = &lines * 8 / 10<cr>
+" nnoremap  <C-h> <C-w>h :let &winwidth = &columns * 8 / 10<cr>
+" nnoremap  <C-l> <C-w>l :let &winwidth = &columns * 8 / 10<cr>
+nnoremap  <C-j> <C-w>j
+nnoremap  <C-k> <C-w>k
+nnoremap  <C-h> <C-w>h
+nnoremap  <C-l> <C-w>l
 nnoremap c<C-j>        :bel sp new<cr>
 nnoremap c<C-k>        :abo sp new<cr>
 nnoremap c<C-h>        :lefta vsp new<cr>
