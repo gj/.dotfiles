@@ -60,6 +60,14 @@ PS1=' %F{6}%1~ ${vcs_info_msg_0_}%f%# '
 autoload -U promptinit; promptinit
 
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
+[[ -d $HOME/.zsh_functions ]] && fpath=( $HOME/.zsh_functions "${fpath[@]}" )
+
+if [ -d $HOME/.zsh_functions ]; then
+  for FUNCTION in $(ls $HOME/.zsh_functions)
+  do
+    autoload -Uz $FUNCTION
+  done
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
