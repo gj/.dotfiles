@@ -18,8 +18,8 @@ Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell'] }
 " Utilities
 Plug 'mileszs/ack.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --js-completer' }
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'w0rp/ale'
 Plug 'vim-scripts/tComment'
@@ -118,8 +118,8 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " scrooloose/nerdtree
-autocmd vimenter * NERDTree
-map <leader>n :NERDTreeToggle<CR>
+" autocmd vimenter * NERDTree
+" map <leader>n :NERDTreeToggle<CR>
 
 " Switching between windows
 " nnoremap  <C-j> <C-w>j :let &winheight = &lines * 8 / 10<cr>
@@ -213,4 +213,15 @@ let g:ale_completion_enabled = 1
 " let g:airline#extensions#ale#enabled = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_delay = 2000
+
+" Make netrw behave like NERDTree per https://shapeshed.com/vim-netrw/
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+augroup END
 
