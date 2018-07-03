@@ -1,0 +1,17 @@
+#! /usr/local/bin/zsh
+
+function deploy {
+  if [ -d .git ]; then
+    if [ "$1" == staging ] || [ "$1" == production ]; then
+      if [ $(git rev-parse --abbrev-ref HEAD) != master ]; then
+        echo "You must be on the master branch to deploy to $1."
+      else
+        bundle exec cap $1 deploy
+      fi
+    elif [ "$1" == qa ] || [ "$1" == qa2 ] || [ "$1" == qa3 ] || [ "$1" == qa4 ] || [ "$1" == qa5 ]; then
+      bundle exec cap $1 deploy BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    fi
+  else
+    echo "This is not a Git repository."
+  fi
+}
