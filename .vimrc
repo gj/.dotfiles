@@ -17,7 +17,7 @@ Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell'] }
 
 " Utilities
 Plug 'mileszs/ack.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --js-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': '$HOME/.pyenv/shims/python3 install.py --js-completer' }
 " Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
@@ -71,7 +71,7 @@ let g:ctrlp_custom_ignore = {
 " Valloric/YouCompleteMe
 let g:ycm_keep_logfiles = 1 " Just for debugging
 let g:ycm_log_level = 'debug' " Just for debugging
-let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
+let g:ycm_server_python_interpreter = '$HOME/.pyenv/shims/python3'
 
 " janko-m/vim-test
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
@@ -221,8 +221,15 @@ let g:netrw_browse_split = 0
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
 let g:netrw_keepdir = 0
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+
+" http://vimcasts.org/episodes/the-edit-command/
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
 

@@ -104,3 +104,5 @@ export NVM_DIR=~/.nvm
 # For GPG setup
 export GPG_TTY=$(tty)
 
+# For pyenv with YouCompleteMe (Vim)
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
