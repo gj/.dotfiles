@@ -20,6 +20,8 @@
 [user]
   name = Gabe Jackson
   email = gj@mail.co.de
+[pull]
+  rebase = true
 [push]
   default = current
 [core]
@@ -36,6 +38,7 @@
   prune = true
 [rebase]
   autosquash = true
+  autoStash = true
 [diff "ruby"]
   funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
 [color "diff"]
