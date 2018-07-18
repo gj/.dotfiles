@@ -111,7 +111,10 @@ autocmd FileType make setlocal noexpandtab
 
 " Display tab and EOL characters
 set listchars=tab:▸\ ,eol:¬
-set list
+set nolist
+
+" http://vimcasts.org/episodes/soft-wrapping-text/
+set wrap linebreak
 
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
