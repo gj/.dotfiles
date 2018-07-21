@@ -12,14 +12,17 @@ endif
 
 call plug#begin('~/.vim/vim-plugins')
 " Language packages
-Plug 'pangloss/vim-javascript',   { 'for': ['javascript'] }
-Plug 'vim-ruby/vim-ruby',         { 'for': ['ruby'] }
-Plug 'tpope/vim-rails',           { 'for': ['ruby'] }
-Plug 'tpope/vim-rake',            { 'for': ['ruby'] }
-Plug 'slim-template/vim-slim',    { 'for': ['slim'] }
-" Plug 'slashmili/alchemist.vim',   { 'for': ['elixir', 'eelixir'] }
-Plug 'elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
-Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell'] }
+Plug 'pangloss/vim-javascript',    { 'for': ['javascript'] }
+Plug 'vim-ruby/vim-ruby',          { 'for': ['ruby'] }
+Plug 'tpope/vim-rails',            { 'for': ['ruby'] }
+Plug 'tpope/vim-rake',             { 'for': ['ruby'] }
+Plug 'slim-template/vim-slim',     { 'for': ['slim'] }
+" Plug 'slashmili/alchemist.vim',    { 'for': ['elixir', 'eelixir'] }
+Plug 'elixir-editors/vim-elixir',  { 'for': ['elixir', 'eelixir'] }
+Plug 'neovimhaskell/haskell-vim',  { 'for': ['haskell'] }
+Plug 'Quramy/tsuquyomi',           { 'for': ['typescript'] }
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
+Plug 'elmcast/elm-vim',            { 'for': ['elm'] }
 
 " Utilities
 Plug 'mileszs/ack.vim'
@@ -76,6 +79,13 @@ let g:ctrlp_custom_ignore = {
 let g:ycm_keep_logfiles = 1 " Just for debugging
 let g:ycm_log_level = 'debug' " Just for debugging
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
+
+" https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support#language-service-tools
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+let g:ycm_semantic_triggers['elm'] = ['.']
 
 " janko-m/vim-test
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
