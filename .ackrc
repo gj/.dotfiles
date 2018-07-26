@@ -1,12 +1,17 @@
+# https://github.com/garybernhardt/dotfiles/blob/master/.ackrc
 # lexically sort filenames
 --sort-files
 
 --type-add=ruby=rake,haml
 --type-add=vim=vimrc
 --type-add=js=jsx
+--type-add=js=json
 --type-set=cucumber=feature
+--type-set=css=sass
 
 # add types ack doesn't know about
 --type-set=MARKDOWN=md,mkd,markdown
 --type-set=RDOC=rdoc
 --type-set=slim=slim
+
+--ignore-dir=.gem

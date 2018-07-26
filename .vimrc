@@ -221,3 +221,21 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
+" Improve ctags
+set tags=./tags;/
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" Random stuff from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
+set history=10000
+set autoindent
+set showmatch
+set incsearch
+set hlsearch
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
+" highlight current line
+set cursorline
+set cmdheight=1
+" Always show tab bar at the top
+set showtabline=2
+set winwidth=79
