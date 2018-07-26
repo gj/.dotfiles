@@ -30,18 +30,18 @@ Plug 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py --js-c
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'w0rp/ale'
 Plug 'vim-scripts/tComment'
-Plug 'pbrisbin/vim-mkdir'
+" Plug 'pbrisbin/vim-mkdir'
 Plug 'christoomey/vim-run-interactive'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'janko-m/vim-test'
-Plug 'tpope/vim-bundler', { 'for': ['ruby'] }
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+" Plug 'janko-m/vim-test'
+" Plug 'tpope/vim-bundler', { 'for': ['ruby'] }
+" Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'roman/golden-ratio'
 
@@ -54,6 +54,7 @@ let mapleader = ' '
 nnoremap <Space> <Nop>
 
 " Set the theme to gruvbox
+set background=dark
 colorscheme gruvbox
 let g:gruvbox_contrast_dark     = 'hard'
 let g:gruvbox_improved_strings  = 1
@@ -76,8 +77,8 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 " Valloric/YouCompleteMe
-let g:ycm_keep_logfiles = 1 " Just for debugging
-let g:ycm_log_level = 'debug' " Just for debugging
+" let g:ycm_keep_logfiles = 1 " Just for debugging
+" let g:ycm_log_level = 'debug' " Just for debugging
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
 
 " https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support#language-service-tools
@@ -87,22 +88,22 @@ endif
 let g:ycm_semantic_triggers['typescript'] = ['.']
 let g:ycm_semantic_triggers['elm'] = ['.']
 
-" janko-m/vim-test
-" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tg :TestVisit<CR>
+" " janko-m/vim-test
+" " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+" nmap <silent> <leader>tn :TestNearest<CR>
+" nmap <silent> <leader>tf :TestFile<CR>
+" nmap <silent> <leader>ts :TestSuite<CR>
+" nmap <silent> <leader>tl :TestLast<CR>
+" nmap <silent> <leader>tg :TestVisit<CR>
 
 " christoomey/vim-run-interactive
 nnoremap <leader>r :RunInInteractiveShell<space>
 
-" junegunn/vim-easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" " junegunn/vim-easy-align
+" " Start interactive EasyAlign in visual mode (e.g. vipga)
+" xmap ga <Plug>(EasyAlign)
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+" nmap ga <Plug>(EasyAlign)
 
 " terryma/vim-multiple-cursors
 let g:multi_cursor_use_default_mapping=0
@@ -120,7 +121,7 @@ set expandtab
 autocmd FileType make setlocal noexpandtab
 
 " Display tab and EOL characters
-set listchars=tab:▸\ ,eol:¬
+" set listchars=tab:▸\ ,eol:¬
 set nolist
 
 " http://vimcasts.org/episodes/soft-wrapping-text/
@@ -153,19 +154,20 @@ nnoremap d<C-l> <C-w>l<C-w>c
 set splitbelow
 set splitright
 
-" Chrome-style tab navigation
-map <D-S-]> gt
-map <D-S-[> gT
+" DOESN'T CURRENTLY WORK IN ITERM2
+" " Chrome-style tab navigation
+" map <D-S-]> gt
+" map <D-S-[> gT
 
-" Resizing windows
-nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-nnoremap <silent> <Leader>. :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
-nnoremap <silent> <Leader>, :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+" " Resizing windows
+" nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
+" nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+" nnoremap <silent> <Leader>. :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+" nnoremap <silent> <Leader>, :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Enable line numbers
 set number
-" set relativenumber
+set relativenumber
 
 " Autocomplete with tab
 " https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
@@ -197,12 +199,6 @@ let g:ale_sign_column_always = 1
 let g:ale_fix_on_save = 1
 " Enable completion where available.
 let g:ale_completion_enabled = 1
-" let g:ale_sign_error = '>>'
-" let g:ale_sign_warning = '--'
-" highlight clear ALEErrorSign
-" highlight clear ALEWarningSign
-" highlight ALEWarning ctermbg=DarkMagenta
-" let g:airline#extensions#ale#enabled = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_delay = 2000
 
@@ -214,12 +210,22 @@ let g:netrw_altv = 1
 let g:netrw_winsize = 25
 let g:netrw_keepdir = 0
 
-" http://vimcasts.org/episodes/the-edit-command/
-cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
+" " http://vimcasts.org/episodes/the-edit-command/
+" cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+" map <leader>ew :e %%
+" map <leader>es :sp %%
+" map <leader>ev :vsp %%
+" map <leader>et :tabe %%
+
+" Enable Vim's spellchecker (http://vimcasts.org/episodes/spell-checking/)
+set spell
+set spelllang=en_us
+
+" http://vimcasts.org/episodes/updating-your-vimrc-file-on-the-fly/
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd! bufwritepost .vimrc source $MYVIMRC
+endif
 
 " Improve ctags
 set tags=./tags;/
