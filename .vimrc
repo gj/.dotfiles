@@ -55,6 +55,7 @@ nnoremap <Space> <Nop>
 
 " Set the theme to gruvbox
 set background=dark
+set t_Co=256
 colorscheme gruvbox
 let g:gruvbox_contrast_dark     = 'hard'
 let g:gruvbox_improved_strings  = 1
@@ -154,17 +155,6 @@ nnoremap d<C-l> <C-w>l<C-w>c
 set splitbelow
 set splitright
 
-" DOESN'T CURRENTLY WORK IN ITERM2
-" " Chrome-style tab navigation
-" map <D-S-]> gt
-" map <D-S-[> gT
-
-" " Resizing windows
-" nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
-" nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-" nnoremap <silent> <Leader>. :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
-" nnoremap <silent> <Leader>, :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
-
 " Enable line numbers
 set number
 set relativenumber
@@ -244,4 +234,42 @@ set cursorline
 set cmdheight=1
 " Always show tab bar at the top
 set showtabline=2
-set winwidth=79
+" This makes RVM work inside Vim. I have no idea why.
+set shell=bash
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+" set t_ti= t_te=
+" keep more context when scrolling off the end of a buffer
+set scrolloff=3
+" Don't make backups at all
+set nobackup
+set nowritebackup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+" display incomplete commands
+set showcmd
+" make tab completion for files/buffers act like bash
+set wildmenu
+" Fix slow O inserts
+set timeout timeoutlen=1000 ttimeoutlen=100
+" Normally, Vim messes with iskeyword when you open a shell file. This can
+" leak out, polluting other file types even after a 'set ft=' change. This
+" variable prevents the iskeyword change so it can't hurt anyone.
+let g:sh_noisk=1
+" Turn folding off for real, hopefully
+set foldmethod=manual
+set nofoldenable
+" Insert only one space when joining lines that contain sentence-terminating
+" punctuation like `.`.
+set nojoinspaces
+" If a file is changed outside of vim, automatically reload it without asking
+set autoread
+" Use the old vim regex engine (version 1, as opposed to version 2, which was
+" introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
+" slower with the new regex engine.
+set re=1
+" Stop SQL language files from doing unholy things to the C-c key
+let g:omni_sql_no_default_maps = 1
+nnoremap <leader><leader> <c-^>
