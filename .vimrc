@@ -41,9 +41,10 @@ Plug 'christoomey/vim-tmux-navigator'
 " Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-" Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'roman/golden-ratio'
+Plug 'justincampbell/vim-eighties'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -100,12 +101,6 @@ let g:ycm_semantic_triggers['elm'] = ['.']
 " christoomey/vim-run-interactive
 nnoremap <leader>r :RunInInteractiveShell<space>
 
-" " junegunn/vim-easy-align
-" " Start interactive EasyAlign in visual mode (e.g. vipga)
-" xmap ga <Plug>(EasyAlign)
-" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-" nmap ga <Plug>(EasyAlign)
-
 " terryma/vim-multiple-cursors
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-n>'
@@ -135,6 +130,11 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" scrooloose/nerdtree
+autocmd vimenter * NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map <leader>n :NERDTreeToggle<CR>
 
 " Switching between windows
 nnoremap  <C-j> <C-w>j
@@ -192,13 +192,14 @@ let g:ale_completion_enabled = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_delay = 2000
 
-" Make netrw behave more like NERDTree per https://shapeshed.com/vim-netrw/
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 0
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-let g:netrw_keepdir = 0
+" " Make netrw behave more like NERDTree per https://shapeshed.com/vim-netrw/
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 0
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 25
+" let g:netrw_keepdir = 0
+let loaded_netrwPlugin = 1
 
 " " http://vimcasts.org/episodes/the-edit-command/
 " cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
