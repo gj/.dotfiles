@@ -43,8 +43,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'justincampbell/vim-eighties'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -132,9 +132,23 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 " scrooloose/nerdtree
-autocmd vimenter * NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <leader>n :NERDTreeToggle<CR>
+" How can I open a NERDTree automatically when vim starts up if no files were specified?
+" https://github.com/scrooloose/nerdtree#faq
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if @% != '.git/COMMIT_EDITMSG' && argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" How can I close vim if the only window left open is a NERDTree?
+" https://github.com/scrooloose/nerdtree#faq
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Conditionally map <leader>n in order to reveal the current file in the file
+" tree when NERDTree is toggled
+map <expr> <leader>n (winnr("$") == 1 && !exists("b:NERDTree")) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
+let NERDTreeShowHidden = 1 " Show hidden files
+let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
+let NERDTreeMinimalUI = 1 " Remove cruft at the top of the NERDTree window
+let NERDTreeIgnore = ['\~$', '^\.git$[[dir]]'] " Ignore undo files + .git dir
+" Set working directory to current file's directory
+" https://superuser.com/a/195191
+autocmd BufEnter * lcd %:p:h
 
 " Switching between windows
 nnoremap  <C-j> <C-w>j
