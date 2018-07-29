@@ -1,5 +1,8 @@
 # Modify PATH per Stack's instructions (Haskell)
-export PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/.local/bin"
+
+# Add this to path so that the 'pg' gem can find the 'pg_config' file
+PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 # Enable ZSH Autosuggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
