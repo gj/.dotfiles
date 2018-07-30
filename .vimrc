@@ -12,17 +12,17 @@ endif
 
 call plug#begin('~/.vim/vim-plugins')
 " Language packages
-Plug 'pangloss/vim-javascript',    { 'for': ['javascript'] }
-Plug 'vim-ruby/vim-ruby',          { 'for': ['ruby'] }
-Plug 'tpope/vim-rails',            { 'for': ['ruby'] }
-Plug 'tpope/vim-rake',             { 'for': ['ruby'] }
-Plug 'slim-template/vim-slim',     { 'for': ['slim'] }
-" Plug 'slashmili/alchemist.vim',    { 'for': ['elixir', 'eelixir'] }
-Plug 'elixir-editors/vim-elixir',  { 'for': ['elixir', 'eelixir'] }
-Plug 'neovimhaskell/haskell-vim',  { 'for': ['haskell'] }
-Plug 'Quramy/tsuquyomi',           { 'for': ['typescript'] }
-Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
-Plug 'elmcast/elm-vim',            { 'for': ['elm'] }
+Plug 'othree/yajs.vim',              { 'for': ['javascript'] }
+Plug 'vim-ruby/vim-ruby',            { 'for': ['ruby'] }
+Plug 'tpope/vim-rails',              { 'for': ['ruby'] }
+Plug 'tpope/vim-rake',               { 'for': ['ruby'] }
+Plug 'slim-template/vim-slim',       { 'for': ['slim'] }
+Plug 'slashmili/alchemist.vim',      { 'for': ['elixir', 'eelixir'] }
+Plug 'elixir-editors/vim-elixir',    { 'for': ['elixir', 'eelixir'] }
+Plug 'neovimhaskell/haskell-vim',    { 'for': ['haskell'] }
+Plug 'Quramy/tsuquyomi',             { 'for': ['typescript'] }
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
+Plug 'elmcast/elm-vim',              { 'for': ['elm'] }
 
 " Utilities
 Plug 'mileszs/ack.vim'
@@ -45,10 +45,14 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'justincampbell/vim-eighties'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'luochen1990/rainbow'
 
 " Themes
 Plug 'morhetz/gruvbox'
 call plug#end()
+
+" luochen1990/rainbow
+let g:rainbow_active = 1
 
 " Change leader to spacebar
 let mapleader = ' '
