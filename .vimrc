@@ -77,8 +77,8 @@ nnoremap <leader>a :Ack!<space>
 
 " ctrlpvim/ctrlp.vim
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.git|vendor|tmp|node_modules)',
-  \ 'file': '\v\.(exe|so|dll|log)$'
+  \ 'dir':  '\v[\/](\.git|vendor|tmp|node_modules|deps|_build)',
+  \ 'file': '\v\.(exe|so|dll|log|beam)$'
   \ }
 
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3' " Valloric/YouCompleteMe
@@ -136,10 +136,10 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 map <expr> <leader>n (winnr("$") == 1 && !exists("b:NERDTree")) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
 let NERDTreeShowHidden = 1 " Show hidden files
 let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
-let NERDTreeIgnore = ['\~$', '^\.git$[[dir]]'] " Ignore undo files + .git dir
+let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]'] " Ignore undo files + .git dir
 " Set working directory to current file's directory
 " https://superuser.com/a/195191
-autocmd BufEnter * lcd %:p:h
+" autocmd BufEnter * lcd %:p:h
 let loaded_netrwPlugin = 1 " Don't load netrw plugin
 
 " Switching between windows
