@@ -17,7 +17,6 @@ Plug 'vim-ruby/vim-ruby',            { 'for': ['ruby'] }
 Plug 'tpope/vim-rails',              { 'for': ['ruby'] }
 Plug 'tpope/vim-rake',               { 'for': ['ruby'] }
 Plug 'slim-template/vim-slim',       { 'for': ['slim'] }
-Plug 'slashmili/alchemist.vim',      { 'for': ['elixir', 'eelixir'] }
 Plug 'elixir-editors/vim-elixir',    { 'for': ['elixir', 'eelixir'] }
 Plug 'neovimhaskell/haskell-vim',    { 'for': ['haskell'] }
 Plug 'Quramy/tsuquyomi',             { 'for': ['typescript'] }
