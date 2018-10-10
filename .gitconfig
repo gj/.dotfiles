@@ -9,8 +9,8 @@
   cp = cherry-pick -x
   d  = diff
   ds = diff --staged
-  l  = log --pretty=colored
-  lt = log --pretty=colored-tags
+  l  = log --pretty=colored --graph
+  lt = log --pretty=colored-tags --graph
   pa = pull --all
   ri = rebase -i
   st = status
