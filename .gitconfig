@@ -29,8 +29,6 @@
   autocrlf = input
 [core "whitespace"]
   tabwidth = 2
-[merge]
-  ff = only
 [commit]
   template = ~/.gitmessage
   gpgsign = true
