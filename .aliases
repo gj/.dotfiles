@@ -6,9 +6,11 @@ alias v='vim'
 alias v.='vim .'
 alias hb='hub browse'
 alias be='bundle exec'
-alias brewup='brew update; brew upgrade; brew prune; brew cleanup; brew doctor'
+alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
 alias t='tree . | less'
 alias -- -='cd -'
+alias ngrok='~/code/ngrok'
+alias r='cd ~/code/rust'
 
 # Docker
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"'

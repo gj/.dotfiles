@@ -15,20 +15,21 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'tpope/vim-rake',               { 'for': ['ruby'] }
   Plug 'slim-template/vim-slim',       { 'for': ['slim'] }
   Plug 'elixir-editors/vim-elixir',    { 'for': ['elixir', 'eelixir'] }
-  " Plug 'neovimhaskell/haskell-vim',    { 'for': ['haskell'] }
+  " Plug 'slashmili/alchemist.vim',      { 'for': ['elixir', 'eelixir'] }
   " Plug 'Quramy/tsuquyomi',             { 'for': ['typescript'] }
-  " Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-  " Plug 'elmcast/elm-vim',              { 'for': ['elm'] }
+  Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
+  Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-  Plug 'mileszs/ack.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
   Plug 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py --js-completer' }
-  Plug 'ctrlpvim/ctrlp.vim'
   Plug 'w0rp/ale'
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'luochen1990/rainbow'
+  Plug 'junegunn/rainbow_parentheses.vim'
   Plug 'morhetz/gruvbox'
 call plug#end()
 
@@ -47,7 +48,6 @@ set showmatch
 set incsearch
 set hlsearch
 set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
-set cursorline " highlight current line
 set cmdheight=1
 set showtabline=2 " Always show tab bar at the top
 set shell=bash " This makes RVM work inside Vim. I have no idea why.
@@ -61,20 +61,19 @@ set showcmd " display incomplete commands
 set wildmenu " make tab completion for files/buffers act like bash
 set timeout timeoutlen=1000 ttimeoutlen=100 " Fix slow O inserts
 let g:sh_noisk=1 " Don't mess with iskeyword when opening a shell file
-set foldmethod=manual " Turn folding off for real, hopefully
-set nofoldenable
 set nojoinspaces " Don't insert multiple spaces when joining lines
 set autoread " If a file is changed outside of vim, automatically reload it without asking
-set re=1 " Use the old vim regex engine
 let g:omni_sql_no_default_maps = 1 " Stop SQL language files from doing unholy things to the C-c key
+
 " Other stuff
 let mapleader = ' ' " Change leader to spacebar
 nnoremap <Space> <Nop>
 nnoremap <leader><leader> <c-^>
-nnoremap <Esc><Esc> :nohlsearch<CR>
+" nnoremap <Esc><Esc> :nohlsearch<CR>
 if has("autocmd") " http://vimcasts.org/episodes/updating-your-vimrc-file-on-the-fly/
   autocmd! bufwritepost .vimrc source $MYVIMRC " Source the vimrc file after saving it
 endif
+
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -82,6 +81,7 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
 nnoremap  <C-j> <C-w>j
 nnoremap  <C-k> <C-w>k
 nnoremap  <C-h> <C-w>h
@@ -95,18 +95,25 @@ nnoremap d<C-k> <C-w>k<C-w>c
 nnoremap d<C-h> <C-w>h<C-w>c
 nnoremap d<C-l> <C-w>l<C-w>c
 nnoremap <BS> <C-z>
+
 set splitbelow " Open new split panes to right and bottom
 set splitright " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
+
 set number
+
 imap <Tab> <C-p>| " Autocomplete with tab
 set complete=.,b,u,] " https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
 set wildmode=longest,list:longest
 set completeopt=menu,preview
+
 set hidden " Automatically set buffers as 'hidden' when navigating away
+
 syntax on " Per https://github.com/neovimhaskell/haskell-vim#installation
 filetype plugin indent on " same as above
+
 set tags=./tags;/ " Improve ctags
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
 set tabstop=2 " indent 2 spaces at a time
 set shiftwidth=2
 set softtabstop=2
@@ -139,13 +146,25 @@ let g:javascript_plugin_flow = 1 " pangloss/vim-javascript
 let g:javascript_conceal_function = "ƒ" " pangloss/vim-javascript
 set conceallevel=1 " pangloss/vim-javascript
 
-" mileszs/ack.vim
-let g:ackprg = 'ag --nogroup --nocolor --column --ignore "**/node_modules/*"'
-nnoremap <leader>a :Ack!<space>
+" fzf / fzf.vim
+command! -bang -nargs=? -complete=dir GFiles
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+nnoremap <c-p> :GFiles<cr>
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+  \   <bang>0)
+nnoremap <leader>a :Rg<cr>
 
-let g:ctrlp_custom_ignore = { 'dir': '\v[\/](\.git|vendor|tmp|node_modules|deps|_build)', 'file': '\v\.(exe|so|dll|log|beam)$' }
-let g:ctrlp_show_hidden=1
-let g:ctrlp_max_history=20
+" folding stuff
+" nnoremap <leader>f :setlocal foldmethod=syntax<cr>
+" augroup remember_folds
+"   autocmd!
+"   autocmd BufWinLeave * mkview
+"   autocmd BufWinEnter * silent! loadview
+" augroup END
 
 " Valloric/YouCompleteMe
 let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
@@ -157,7 +176,7 @@ let g:ycm_semantic_triggers['elm'] = ['.']
 
 " scrooloose/nerdtree (https://github.com/scrooloose/nerdtree#faq)
 " https://superuser.com/a/1137895
-nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>:CtrlPClearCache<cr>
+nmap <Leader>r :NERDTreeFocus<cr>R<c-w>
 autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if @% != '.git/COMMIT_EDITMSG' && argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -171,12 +190,19 @@ autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
 
 " https://github.com/w0rp/ale
 let g:ale_linters_explicit = 1
-let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'] }
-let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'] }
-let g:ale_sign_column_always = 1
+let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'], 'rust': ['rls'] }
+let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'], 'typescript': ['prettier'] }
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
 let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_delay = 2000
+let g:ale_lint_delay = 1000
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_javascript_prettier_options = '--single-quote'
+let g:ale_rust_rls_toolchain = 'stable'
+let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+
+" airline<>ale integration
+let g:airline#extensions#ale#enabled = 1
+
+" rust.vim
+let g:rustfmt_autosave = 1

@@ -1,8 +1,8 @@
-# Modify PATH per Stack's instructions (Haskell)
-PATH="$PATH:$HOME/.local/bin"
-
 # Add this to path so that the 'pg' gem can find the 'pg_config' file
-PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
+
+# Enable FSH
+source ~/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Enable ZSH Autosuggestions
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -19,8 +19,7 @@ export HOMEBREW_NO_ANALYTICS=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Initialize completion
-autoload -U compinit
-compinit -D
+autoload -Uz compinit && compinit -D
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Nicer history
@@ -36,11 +35,6 @@ alias wget='wget --no-hsts'
 # Use vim as the editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
-
-# Use C-x C-e to edit the current command line
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
 
 # By default, zsh considers many characters part of a word (e.g., _ and -).
 # Narrow that down to allow easier skipping through words via M-f and M-b.
@@ -60,7 +54,10 @@ zstyle ':vcs_info:*' formats '%F{5}%F{8}[%F{7}%b%F{8}]%f '
 zstyle ':vcs_info:(git):*' branchformat '%b%F{1}:%F{3}%r'
 precmd () { vcs_info }
 PS1=' %F{6}%1~ ${vcs_info_msg_0_}%f%# '
-autoload -U promptinit; promptinit
+autoload -U promptinit && promptinit
+
+# Ignore commands prefixed with a space (great for not accidentally storing secrets in your shell history file
+setopt histignorespace
 
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 [[ -d $HOME/.zsh_functions ]] && fpath=( $HOME/.zsh_functions "${fpath[@]}" )
@@ -72,19 +69,24 @@ if [ -d $HOME/.zsh_functions ]; then
   done
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-export NVM_DIR=~/.nvm
-
 # For GPG setup
 export GPG_TTY=$(tty)
 
 # For pyenv with YouCompleteMe (Vim)
+# Keeping this for now after switching to ASDF
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
+# https://stackoverflow.com/a/23314326
+bindkey -e
+
+export FZF_DEFAULT_COMMAND='
+  (git ls-tree -r --name-only HEAD ||
+    fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/) 2> /dev/null'
+export FZF_DEFAULT_OPTS='--ansi'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+export PATH="$HOME/.cargo/bin:$PATH"
