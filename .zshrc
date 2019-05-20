@@ -59,16 +59,6 @@ autoload -U promptinit && promptinit
 # Ignore commands prefixed with a space (great for not accidentally storing secrets in your shell history file
 setopt histignorespace
 
-[[ -f $HOME/.aliases ]] && source $HOME/.aliases
-[[ -d $HOME/.zsh_functions ]] && fpath=( $HOME/.zsh_functions "${fpath[@]}" )
-
-if [ -d $HOME/.zsh_functions ]; then
-  for FUNCTION in $(ls $HOME/.zsh_functions)
-  do
-    autoload -Uz $FUNCTION
-  done
-fi
-
 # For GPG setup
 export GPG_TTY=$(tty)
 
@@ -90,3 +80,23 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 . $HOME/.asdf/completions/asdf.bash
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+[[ -f $HOME/.aliases ]] && source $HOME/.aliases
+[[ -d $HOME/.zsh_functions ]] && fpath=( $HOME/.zsh_functions "${fpath[@]}" )
+
+if [ -d $HOME/.zsh_functions ]; then
+  for FUNCTION in $(/bin/ls $HOME/.zsh_functions)
+  do
+    autoload -Uz $FUNCTION
+  done
+fi
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh

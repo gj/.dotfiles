@@ -23,23 +23,24 @@ call plug#begin('~/.vim/vim-plugins')
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
-  Plug 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py --js-completer' }
+  " Plug 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py --js-completer' }
   Plug 'w0rp/ale'
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/rainbow_parentheses.vim'
   Plug 'morhetz/gruvbox'
 call plug#end()
 
-set background=dark
-set t_Co=256
-colorscheme gruvbox " Set the theme to gruvbox
-let g:gruvbox_contrast_dark     = 'hard'
-let g:gruvbox_improved_strings  = 1
-let g:gruvbox_improved_warnings = 1
-let g:gruvbox_guisp_fallback    = 'fg'
+" set background=dark
+" set t_Co=256
+" colorscheme gruvbox " Set the theme to gruvbox
+" let g:gruvbox_contrast_dark     = 'hard'
+" let g:gruvbox_improved_strings  = 1
+" let g:gruvbox_improved_warnings = 1
+" let g:gruvbox_guisp_fallback    = 'fg'
 
 " Random stuff from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 set history=10000
@@ -50,7 +51,7 @@ set hlsearch
 set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
 set cmdheight=1
 set showtabline=2 " Always show tab bar at the top
-set shell=bash " This makes RVM work inside Vim. I have no idea why.
+" set shell=bash " This makes RVM work inside Vim. I have no idea why.
 set scrolloff=3 " keep more context when scrolling off the end of a buffer
 set nobackup " Don't make backups at all
 set nowritebackup
@@ -74,13 +75,13 @@ if has("autocmd") " http://vimcasts.org/episodes/updating-your-vimrc-file-on-the
   autocmd! bufwritepost .vimrc source $MYVIMRC " Source the vimrc file after saving it
 endif
 
-" Highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+" " Highlight trailing whitespace
+" highlight ExtraWhitespace ctermbg=red guibg=red
+" match ExtraWhitespace /\s\+$/
+" autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+" autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+" autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+" autocmd BufWinLeave * call clearmatches()
 
 nnoremap  <C-j> <C-w>j
 nnoremap  <C-k> <C-w>k
@@ -99,7 +100,7 @@ nnoremap <BS> <C-z>
 set splitbelow " Open new split panes to right and bottom
 set splitright " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
 
-set number
+" set number
 
 imap <Tab> <C-p>| " Autocomplete with tab
 set complete=.,b,u,] " https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
@@ -111,8 +112,8 @@ set hidden " Automatically set buffers as 'hidden' when navigating away
 syntax on " Per https://github.com/neovimhaskell/haskell-vim#installation
 filetype plugin indent on " same as above
 
-set tags=./tags;/ " Improve ctags
-map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+" set tags=./tags;/ " Improve ctags
+" map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 set tabstop=2 " indent 2 spaces at a time
 set shiftwidth=2
@@ -141,11 +142,6 @@ endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
 
-let g:rainbow_active = 1 " luochen1990/rainbow
-let g:javascript_plugin_flow = 1 " pangloss/vim-javascript
-let g:javascript_conceal_function = "ƒ" " pangloss/vim-javascript
-set conceallevel=1 " pangloss/vim-javascript
-
 " fzf / fzf.vim
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -158,51 +154,56 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 nnoremap <leader>a :Rg<cr>
 
-" folding stuff
-" nnoremap <leader>f :setlocal foldmethod=syntax<cr>
-" augroup remember_folds
-"   autocmd!
-"   autocmd BufWinLeave * mkview
-"   autocmd BufWinEnter * silent! loadview
-" augroup END
+" " folding stuff
+" " nnoremap <leader>f :setlocal foldmethod=syntax<cr>
+" " augroup remember_folds
+" "   autocmd!
+" "   autocmd BufWinLeave * mkview
+" "   autocmd BufWinEnter * silent! loadview
+" " augroup END
+"
+" " Valloric/YouCompleteMe
+" let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
+" if !exists("g:ycm_semantic_triggers")
+"   let g:ycm_semantic_triggers = {}
+" endif
+" let g:ycm_semantic_triggers['typescript'] = ['.']
+" let g:ycm_semantic_triggers['elm'] = ['.']
+"
+" " scrooloose/nerdtree (https://github.com/scrooloose/nerdtree#faq)
+" " https://superuser.com/a/1137895
+" nmap <Leader>r :NERDTreeFocus<cr>R<c-w>
+" autocmd StdinReadPre * let s:std_in=1
+" " autocmd VimEnter * if @% != '.git/COMMIT_EDITMSG' && argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" " Reveal the current file in the file tree when NERDTree is toggled
+" map <expr> <leader>n ((winnr("$") == 1) && exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) == -1)) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
+" let NERDTreeShowHidden = 1 " Show hidden files
+" let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
+" let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]'] " Ignore undo files + .git dir
+" let loaded_netrwPlugin = 1 " Don't load netrw plugin
+" autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
 
-" Valloric/YouCompleteMe
-let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
-if !exists("g:ycm_semantic_triggers")
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
-let g:ycm_semantic_triggers['elm'] = ['.']
-
-" scrooloose/nerdtree (https://github.com/scrooloose/nerdtree#faq)
-" https://superuser.com/a/1137895
-nmap <Leader>r :NERDTreeFocus<cr>R<c-w>
-autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if @% != '.git/COMMIT_EDITMSG' && argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Reveal the current file in the file tree when NERDTree is toggled
-map <expr> <leader>n ((winnr("$") == 1) && exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) == -1)) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
-let NERDTreeShowHidden = 1 " Show hidden files
-let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
-let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]'] " Ignore undo files + .git dir
-let loaded_netrwPlugin = 1 " Don't load netrw plugin
-autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
-
-" https://github.com/w0rp/ale
-let g:ale_linters_explicit = 1
-let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'], 'rust': ['rls'] }
-let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'], 'typescript': ['prettier'] }
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_delay = 1000
-let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options = '--single-quote'
-let g:ale_rust_rls_toolchain = 'stable'
-let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
-
+" " https://github.com/w0rp/ale
+" let g:ale_linters_explicit = 1
+" let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'], 'rust': ['rls'] }
+" let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'], 'typescript': ['prettier'] }
+" let g:ale_fix_on_save = 1
+" let g:ale_completion_enabled = 1
+" let g:ale_lint_on_text_changed = 'normal'
+" let g:ale_lint_delay = 1000
+" let g:ale_javascript_prettier_use_local_config = 1
+" let g:ale_javascript_prettier_options = '--single-quote'
+" let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
+"
 " airline<>ale integration
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='angr'
 
 " rust.vim
 let g:rustfmt_autosave = 1
+let g:rust_fold = 1
