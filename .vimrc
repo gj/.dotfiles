@@ -24,7 +24,8 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   " Plug 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py --js-completer' }
-  Plug 'w0rp/ale'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Plug 'w0rp/ale'
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -32,6 +33,9 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/rainbow_parentheses.vim'
   Plug 'morhetz/gruvbox'
+
+  " Markdown
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': ['markdown'] }
 call plug#end()
 
 " set background=dark
@@ -49,7 +53,7 @@ set showmatch
 set incsearch
 set hlsearch
 set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
-set cmdheight=1
+set cmdheight=2
 set showtabline=2 " Always show tab bar at the top
 " set shell=bash " This makes RVM work inside Vim. I have no idea why.
 set scrolloff=3 " keep more context when scrolling off the end of a buffer
@@ -100,14 +104,52 @@ nnoremap <BS> <C-z>
 set splitbelow " Open new split panes to right and bottom
 set splitright " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
 
-" set number
+set relativenumber
 
-imap <Tab> <C-p>| " Autocomplete with tab
+" imap <Tab> <C-p>| " Autocomplete with tab
 set complete=.,b,u,] " https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
 set wildmode=longest,list:longest
 set completeopt=menu,preview
 
 set hidden " Automatically set buffers as 'hidden' when navigating away
+
+" coc.nvim
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 syntax on " Per https://github.com/neovimhaskell/haskell-vim#installation
 filetype plugin indent on " same as above
@@ -130,17 +172,17 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
-" Indent if we're at the beginning of a line. Else, do completion.
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-n>
+" " Indent if we're at the beginning of a line. Else, do completion.
+" function! InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     else
+"         return "\<c-p>"
+"     endif
+" endfunction
+" inoremap <expr> <tab> InsertTabWrapper()
+" inoremap <s-tab> <c-n>
 
 " fzf / fzf.vim
 command! -bang -nargs=? -complete=dir GFiles
@@ -175,35 +217,35 @@ nnoremap <leader>a :Rg<cr>
 " nmap <Leader>r :NERDTreeFocus<cr>R<c-w>
 " autocmd StdinReadPre * let s:std_in=1
 " " autocmd VimEnter * if @% != '.git/COMMIT_EDITMSG' && argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" " Reveal the current file in the file tree when NERDTree is toggled
-" map <expr> <leader>n ((winnr("$") == 1) && exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) == -1)) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
-" let NERDTreeShowHidden = 1 " Show hidden files
-" let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
-" let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]'] " Ignore undo files + .git dir
-" let loaded_netrwPlugin = 1 " Don't load netrw plugin
-" autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Reveal the current file in the file tree when NERDTree is toggled
+map <expr> <leader>n ((winnr("$") == 1) && exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) == -1)) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
+let NERDTreeShowHidden = 1 " Show hidden files
+let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
+let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]', 'target$[[dir]]']
+let loaded_netrwPlugin = 1 " Don't load netrw plugin
+autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
 
-" " https://github.com/w0rp/ale
-" let g:ale_linters_explicit = 1
-" let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'], 'rust': ['rls'] }
-" let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'], 'typescript': ['prettier'] }
+" https://github.com/w0rp/ale
+let g:ale_linters_explicit = 1
+let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'], 'rust': ['rls'] }
+let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'], 'typescript': ['prettier'] }
 " let g:ale_fix_on_save = 1
-" let g:ale_completion_enabled = 1
-" let g:ale_lint_on_text_changed = 'normal'
+let g:ale_completion_enabled = 1
+let g:ale_lint_on_text_changed = 'normal'
 " let g:ale_lint_delay = 1000
-" let g:ale_javascript_prettier_use_local_config = 1
-" let g:ale_javascript_prettier_options = '--single-quote'
-" let g:ale_rust_rls_toolchain = 'stable'
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_javascript_prettier_options = '--single-quote'
+let g:ale_rust_rls_toolchain = 'stable'
 " let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
-"
+
 " airline<>ale integration
-" let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='angr'
 
 " rust.vim
-let g:rustfmt_autosave = 1
-let g:rust_fold = 1
+" let g:rustfmt_autosave = 1
+" let g:rust_fold = 1

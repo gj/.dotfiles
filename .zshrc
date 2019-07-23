@@ -1,3 +1,6 @@
+# Add Homebrew sbin dir to PATH
+export PATH="/usr/local/sbin:$PATH"
+
 # Add this to path so that the 'pg' gem can find the 'pg_config' file
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
@@ -11,6 +14,15 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
 bindkey '^ ' autosuggest-accept
+
+# Enable ZSH History Substring Search
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # Don't send analytics information to Homebrew
 export HOMEBREW_NO_ANALYTICS=1
@@ -45,16 +57,18 @@ export ACK_COLOR_MATCH='red'
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-autoload -U colors && colors
-setopt promptsubst
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-zstyle ':vcs_info:*' formats '%F{5}%F{8}[%F{7}%b%F{8}]%f '
-zstyle ':vcs_info:(git):*' branchformat '%b%F{1}:%F{3}%r'
-precmd () { vcs_info }
-PS1=' %F{6}%1~ ${vcs_info_msg_0_}%f%# '
+# autoload -U colors && colors
+# setopt promptsubst
+# autoload -Uz vcs_info
+# zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+# zstyle ':vcs_info:*' formats '%F{5}%F{8}[%F{7}%b%F{8}]%f '
+# zstyle ':vcs_info:(git):*' branchformat '%b%F{1}:%F{3}%r'
+# precmd () { vcs_info }
+# PS1=' %F{6}%1~ ${vcs_info_msg_0_}%f%# '
 autoload -U promptinit && promptinit
+# https://github.com/sindresorhus/pure
+prompt pure
 
 # Ignore commands prefixed with a space (great for not accidentally storing secrets in your shell history file
 setopt histignorespace
@@ -69,9 +83,11 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 # https://stackoverflow.com/a/23314326
 bindkey -e
 
+# export FZF_DEFAULT_COMMAND='
+#   (git ls-tree -r --name-only HEAD ||
+#     fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/) 2> /dev/null'
 export FZF_DEFAULT_COMMAND='
-  (git ls-tree -r --name-only HEAD ||
-    fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/) 2> /dev/null'
+  fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ 2> /dev/null'
 export FZF_DEFAULT_OPTS='--ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -90,6 +106,9 @@ if [ -d $HOME/.zsh_functions ]; then
     autoload -Uz $FUNCTION
   done
 fi
+
+# Deduplicate $PATH
+typeset -U PATH
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
