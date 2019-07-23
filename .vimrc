@@ -165,8 +165,9 @@ autocmd FileType make setlocal noexpandtab " Don't expand tabs into spaces in Ma
 set nolist
 set wrap linebreak " http://vimcasts.org/episodes/soft-wrapping-text/
 set winwidth=79
-set winheight=30
+set winheight=5 " Duplicate winheight declarations are a hack around https://stackoverflow.com/questions/22336553/why-cant-vim-process-vimrc-when-winheight-option-isnt-set-twice
 set winminheight=5
+set winheight=30
 " Jump to last cursor position unless it's invalid or in an event handler
 autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |

@@ -8,7 +8,7 @@ export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 source ~/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 # Enable ZSH Autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Configure ZSH Autosuggestions
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
