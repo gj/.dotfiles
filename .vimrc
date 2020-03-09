@@ -9,42 +9,23 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/vim-plugins')
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'othree/yajs.vim',              { 'for': ['javascript'] }
-  Plug 'vim-ruby/vim-ruby',            { 'for': ['ruby'] }
-  Plug 'tpope/vim-rails',              { 'for': ['ruby'] }
-  Plug 'tpope/vim-rake',               { 'for': ['ruby'] }
-  Plug 'slim-template/vim-slim',       { 'for': ['slim'] }
-  Plug 'elixir-editors/vim-elixir',    { 'for': ['elixir', 'eelixir'] }
-  " Plug 'slashmili/alchemist.vim',      { 'for': ['elixir', 'eelixir'] }
-  " Plug 'Quramy/tsuquyomi',             { 'for': ['typescript'] }
   Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
   Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
-  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+  Plug 'soli/prolog-vim', { 'for': ['prolog'] }
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
-  " Plug 'Valloric/YouCompleteMe', { 'do': '/usr/local/bin/python3 install.py --js-completer' }
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " Plug 'w0rp/ale'
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/rainbow_parentheses.vim'
-  Plug 'morhetz/gruvbox'
-
-  " Markdown
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': ['markdown'] }
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-surround'
 call plug#end()
-
-" set background=dark
-" set t_Co=256
-" colorscheme gruvbox " Set the theme to gruvbox
-" let g:gruvbox_contrast_dark     = 'hard'
-" let g:gruvbox_improved_strings  = 1
-" let g:gruvbox_improved_warnings = 1
-" let g:gruvbox_guisp_fallback    = 'fg'
 
 " Random stuff from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 set history=10000
@@ -53,7 +34,7 @@ set showmatch
 set incsearch
 set hlsearch
 set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
-set cmdheight=2
+set cmdheight=1
 set showtabline=2 " Always show tab bar at the top
 " set shell=bash " This makes RVM work inside Vim. I have no idea why.
 set scrolloff=3 " keep more context when scrolling off the end of a buffer
@@ -79,14 +60,6 @@ if has("autocmd") " http://vimcasts.org/episodes/updating-your-vimrc-file-on-the
   autocmd! bufwritepost .vimrc source $MYVIMRC " Source the vimrc file after saving it
 endif
 
-" " Highlight trailing whitespace
-" highlight ExtraWhitespace ctermbg=red guibg=red
-" match ExtraWhitespace /\s\+$/
-" autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-" autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-" autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-" autocmd BufWinLeave * call clearmatches()
-
 nnoremap  <C-j> <C-w>j
 nnoremap  <C-k> <C-w>k
 nnoremap  <C-h> <C-w>h
@@ -104,7 +77,8 @@ nnoremap <BS> <C-z>
 set splitbelow " Open new split panes to right and bottom
 set splitright " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
 
-set relativenumber
+" set relativenumber
+set number
 
 " imap <Tab> <C-p>| " Autocomplete with tab
 set complete=.,b,u,] " https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
@@ -150,12 +124,15 @@ nmap <leader>f  <Plug>(coc-format-selected)
 command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+nmap <silent> ge <Plug>(coc-diagnostic-info)
+nmap <silent> gn <Plug>(coc-diagnostic-next)
+nmap <silent> gp <Plug>(coc-diagnostic-prev)
 
 syntax on " Per https://github.com/neovimhaskell/haskell-vim#installation
 filetype plugin indent on " same as above
 
-" set tags=./tags;/ " Improve ctags
-" map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+set tags=./tags;/ " Improve ctags
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 set tabstop=2 " indent 2 spaces at a time
 set shiftwidth=2
@@ -173,17 +150,6 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
-" " Indent if we're at the beginning of a line. Else, do completion.
-" function! InsertTabWrapper()
-"     let col = col('.') - 1
-"     if !col || getline('.')[col - 1] !~ '\k'
-"         return "\<tab>"
-"     else
-"         return "\<c-p>"
-"     endif
-" endfunction
-" inoremap <expr> <tab> InsertTabWrapper()
-" inoremap <s-tab> <c-n>
 
 " fzf / fzf.vim
 command! -bang -nargs=? -complete=dir GFiles
@@ -197,22 +163,6 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 nnoremap <leader>a :Rg<cr>
 
-" " folding stuff
-" " nnoremap <leader>f :setlocal foldmethod=syntax<cr>
-" " augroup remember_folds
-" "   autocmd!
-" "   autocmd BufWinLeave * mkview
-" "   autocmd BufWinEnter * silent! loadview
-" " augroup END
-"
-" " Valloric/YouCompleteMe
-" let g:ycm_server_python_interpreter = '/usr/local/bin/python3'
-" if !exists("g:ycm_semantic_triggers")
-"   let g:ycm_semantic_triggers = {}
-" endif
-" let g:ycm_semantic_triggers['typescript'] = ['.']
-" let g:ycm_semantic_triggers['elm'] = ['.']
-"
 " " scrooloose/nerdtree (https://github.com/scrooloose/nerdtree#faq)
 " " https://superuser.com/a/1137895
 " nmap <Leader>r :NERDTreeFocus<cr>R<c-w>
@@ -227,26 +177,65 @@ let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]', 'target$[[dir]
 let loaded_netrwPlugin = 1 " Don't load netrw plugin
 autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
 
-" https://github.com/w0rp/ale
-let g:ale_linters_explicit = 1
-let g:ale_linters = { 'javascript': ['eslint'], 'jsx': ['eslint'], 'rust': ['rls'] }
-let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'jsx': ['eslint'], 'typescript': ['prettier'] }
-" let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-let g:ale_lint_on_text_changed = 'normal'
-" let g:ale_lint_delay = 1000
-let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_javascript_prettier_options = '--single-quote'
-let g:ale_rust_rls_toolchain = 'stable'
-" let g:ale_rust_cargo_use_clippy = executable('cargo-clippy')
-
-" airline<>ale integration
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='angr'
+let g:airline_mode_map = {
+      \ '__'     : '-',
+      \ 'c'      : 'C',
+      \ 'i'      : 'I',
+      \ 'ic'     : 'I',
+      \ 'ix'     : 'I',
+      \ 'n'      : 'N',
+      \ 'multi'  : 'M',
+      \ 'ni'     : 'N',
+      \ 'no'     : 'N',
+      \ 'R'      : 'R',
+      \ 'Rv'     : 'R',
+      \ 's'      : 'S',
+      \ 'S'      : 'S',
+      \ 't'      : 'T',
+      \ 'v'      : 'V',
+      \ 'V'      : 'V',
+      \ ''     : 'V',
+      \ }
+let g:airline_exclude_preview = 1
+let g:airline_highlighting_cache = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffers_label = 'bufz'
+let g:airline#extensions#tabline#tabs_label = 'tabz'
+let g:airline#extensions#tabline#overflow_marker = '…'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>[ <Plug>AirlineSelectPrevTab
+nmap <leader>] <Plug>AirlineSelectNextTab
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#tab_min_count = 2
+let airline#extensions#tabline#ignore_bufadd_pat =
+      \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#wordcount#filetypes =
+      \ ['asciidoc', 'help', 'mail', 'markdown', 'org', 'rst', 'tex', 'text']
 
 " rust.vim
-" let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 1
 " let g:rust_fold = 1
+
+" Detect .pl files as Prolog instead of Perl
+let g:filetype_pl="prolog"
+
+highlight CursorLine cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+highlight CursorLineNr cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+set cursorline

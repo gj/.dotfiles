@@ -1,4 +1,3 @@
-alias code='cd ~/code'
 alias desk='cd ~/Desktop'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias v='vim'
@@ -29,8 +28,13 @@ alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall 
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 # Rust
-alias c='cargo'
-alias r='cd ~/code/rust'
+alias rust='cd ~/code/rust'
+
+# Prolog
+alias prolog='cd ~/code/prolog'
 
 # Oso
-alias o='cd ~/code/oso'
+alias oso='cd ~/code/work/oso'
+
+# apps
+alias ngrok='~/apps/ngrok'

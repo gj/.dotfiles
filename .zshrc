@@ -16,7 +16,7 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=true
 bindkey '^ ' autosuggest-accept
 
 # Enable ZSH History Substring Search
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M emacs '^P' history-substring-search-up
@@ -66,9 +66,7 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # zstyle ':vcs_info:(git):*' branchformat '%b%F{1}:%F{3}%r'
 # precmd () { vcs_info }
 # PS1=' %F{6}%1~ ${vcs_info_msg_0_}%f%# '
-autoload -U promptinit && promptinit
-# https://github.com/sindresorhus/pure
-prompt pure
+# autoload -U promptinit && promptinit
 
 # Ignore commands prefixed with a space (great for not accidentally storing secrets in your shell history file
 setopt histignorespace
@@ -76,9 +74,9 @@ setopt histignorespace
 # For GPG setup
 export GPG_TTY=$(tty)
 
-# For pyenv with YouCompleteMe (Vim)
-# Keeping this for now after switching to ASDF
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
+# # For pyenv with YouCompleteMe (Vim)
+# # Keeping this for now after switching to ASDF
+# export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 # https://stackoverflow.com/a/23314326
 bindkey -e
@@ -107,15 +105,10 @@ if [ -d $HOME/.zsh_functions ]; then
   done
 fi
 
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
+
 # Deduplicate $PATH
 typeset -U PATH
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/gabe/.asdf/installs/nodejs/11.13.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh
+eval "$(starship init zsh)"
