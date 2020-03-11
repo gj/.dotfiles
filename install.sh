@@ -14,6 +14,7 @@ fi
 # Symlink all the dotfiles
 
 ln -sfv "$DOTFILES_DIR/.ackrc" ~
+ln -sfv "$DOTFILES_DIR/.agignore" ~
 ln -sfv "$DOTFILES_DIR/.aliases" ~
 ln -sfv "$DOTFILES_DIR/.ctags" ~
 ln -sfv "$DOTFILES_DIR/.curlrc" ~
@@ -30,3 +31,4 @@ ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
 ln -sfv "$DOTFILES_DIR/.vimrc" ~
 ln -sfv "$DOTFILES_DIR/.zshrc" ~
 ln -sfv "$DOTFILES_DIR/.zsh_functions" ~
+mkdir -p ~/.config && ln -sfv "$DOTFILES_DIR/starship.toml" ~/.config

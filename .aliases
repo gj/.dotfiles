@@ -10,6 +10,7 @@ alias t='tree -axCFL 10 -I "target|node_modules|_build|.git" | less -R'
 alias ts='tree -shaxCFL 10 -I "target|node_modules|_build|.git" | less -R'
 alias cat=bat
 alias l='exa -la --git --group-directories-first'
+alias fd=fdfind
 
 # Docker
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"'
