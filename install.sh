@@ -24,6 +24,7 @@ ln -sfv "$DOTFILES_DIR/.gitconfig" ~
 ln -sfv "$DOTFILES_DIR/.gitignore_global" ~
 ln -sfv "$DOTFILES_DIR/.gitmessage" ~
 ln -sfv "$DOTFILES_DIR/.irbrc" ~
+ln -sfv "$DOTFILES_DIR/.prettierrc.toml" ~
 ln -sfv "$DOTFILES_DIR/.pryrc" ~
 ln -sfv "$DOTFILES_DIR/.psqlrc" ~
 ln -sfv "$DOTFILES_DIR/.rspec" ~
