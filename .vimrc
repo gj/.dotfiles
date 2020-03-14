@@ -21,8 +21,6 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'scrooloose/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'junegunn/rainbow_parentheses.vim'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
@@ -35,7 +33,7 @@ set showmatch
 set incsearch
 set hlsearch
 set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
-set cmdheight=1
+set cmdheight=2
 set showtabline=2 " Always show tab bar at the top
 " set shell=bash " This makes RVM work inside Vim. I have no idea why.
 set scrolloff=3 " keep more context when scrolling off the end of a buffer
@@ -101,13 +99,28 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Remap keys for gotos
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> gp <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gn <Plug>(coc-diagnostic-next)
+nmap <silent> ge <Plug>(coc-diagnostic-info)
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" Use K to show documentation in preview window
+" Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -116,18 +129,8 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-nmap <silent> ge <Plug>(coc-diagnostic-info)
-nmap <silent> gn <Plug>(coc-diagnostic-next)
-nmap <silent> gp <Plug>(coc-diagnostic-prev)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 syntax on " Per https://github.com/neovimhaskell/haskell-vim#installation
 filetype plugin indent on " same as above
@@ -164,19 +167,7 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 nnoremap <leader>a :Rg<cr>
 
-" " scrooloose/nerdtree (https://github.com/scrooloose/nerdtree#faq)
-" " https://superuser.com/a/1137895
-" nmap <Leader>r :NERDTreeFocus<cr>R<c-w>
-" autocmd StdinReadPre * let s:std_in=1
-" " autocmd VimEnter * if @% != '.git/COMMIT_EDITMSG' && argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Reveal the current file in the file tree when NERDTree is toggled
-map <expr> <leader>n ((winnr("$") == 1) && exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) == -1)) ? ":NERDTreeFind<CR>" : ":NERDTreeToggle<CR>"
-let NERDTreeShowHidden = 1 " Show hidden files
-let NERDTreeAutoDeleteBuffer = 1 " Delete buffer when deleting file in NERDTree
-let NERDTreeIgnore = ['\~$', '\.beam$[[file]]', '^\.git$[[dir]]', 'target$[[dir]]']
 let loaded_netrwPlugin = 1 " Don't load netrw plugin
-autocmd FileType NERDTree noremap <buffer> <leader><leader> <nop>
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme='angr'
@@ -242,3 +233,8 @@ let g:filetype_toml="toml"
 highlight CursorLine cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 highlight CursorLineNr cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 set cursorline
+
+nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
+hi HighlightedyankRegion term=bold cterm=bold
+
+nmap <leader>n :CocCommand explorer<CR>
