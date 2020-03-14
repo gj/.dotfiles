@@ -44,17 +44,18 @@ export GPG_TTY=$(tty)
 # https://stackoverflow.com/a/23314326
 bindkey -e
 
+[[ -f $HOME/.aliases ]] && source $HOME/.aliases
+
 # export FZF_DEFAULT_COMMAND='
 #   (git ls-tree -r --name-only HEAD ||
 #     fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/) 2> /dev/null'
-export FZF_DEFAULT_COMMAND='fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ 2> /dev/null'
+export FZF_DEFAULT_COMMAND='fdfind --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ 2> /dev/null'
 export FZF_DEFAULT_OPTS='--ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-[[ -f $HOME/.aliases ]] && source $HOME/.aliases
 [[ -d $HOME/.zsh_functions ]] && fpath=( $HOME/.zsh_functions "${fpath[@]}" )
 
 if [ -d $HOME/.zsh_functions ]; then
