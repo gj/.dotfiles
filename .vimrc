@@ -9,13 +9,14 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/vim-plugins')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'neoclide/coc.nvim',            { 'branch': 'release' }
   Plug 'othree/yajs.vim',              { 'for': ['javascript'] }
   Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-  Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
-  Plug 'soli/prolog-vim', { 'for': ['prolog'] }
+  Plug 'rust-lang/rust.vim',           { 'for': ['rust'] }
+  Plug 'soli/prolog-vim',              { 'for': ['prolog'] }
+  Plug 'cespare/vim-toml',             { 'for': ['toml'] }
 
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf',                 { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
@@ -235,6 +236,8 @@ let g:rustfmt_autosave = 1
 
 " Detect .pl files as Prolog instead of Perl
 let g:filetype_pl="prolog"
+" Why doesn't Vim autodetect TOML files?
+let g:filetype_toml="toml"
 
 highlight CursorLine cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 highlight CursorLineNr cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
