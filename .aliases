@@ -47,3 +47,6 @@ alias demo='cd ~/work/demo'
 
 # apps
 alias ngrok='~/apps/ngrok'
+
+alias notes='touch ~/Documents/notes/$(date +"%Y-%m-%d").md && vim ~/Documents/notes/$(date +"%Y-%m-%d").md'
+alias note='notes'
