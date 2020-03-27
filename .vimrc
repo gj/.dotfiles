@@ -21,7 +21,6 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'junegunn/rainbow_parentheses.vim'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
 call plug#end()
@@ -76,10 +75,8 @@ nnoremap <BS> <C-z>
 set splitbelow " Open new split panes to right and bottom
 set splitright " https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
 
-" set relativenumber
 set number
 
-" imap <Tab> <C-p>| " Autocomplete with tab
 set complete=.,b,u,] " https://robots.thoughtbot.com/vim-you-complete-me#the-quick-rundown
 set wildmode=longest,list:longest
 set completeopt=menu,preview
@@ -134,9 +131,6 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 syntax on " Per https://github.com/neovimhaskell/haskell-vim#installation
 filetype plugin indent on " same as above
-
-set tags=./tags;/ " Improve ctags
-map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 set tabstop=2 " indent 2 spaces at a time
 set shiftwidth=2
@@ -230,11 +224,23 @@ let g:filetype_pl="prolog"
 " Why doesn't Vim autodetect TOML files?
 let g:filetype_toml="toml"
 
-highlight CursorLine cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-highlight CursorLineNr cterm=bold ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+highlight CursorLine cterm=bold
+highlight CursorLineNr cterm=bold
 set cursorline
 
 nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
-hi HighlightedyankRegion term=bold cterm=bold
+hi HighlightedyankRegion cterm=bold
 
 nmap <leader>n :CocCommand explorer<CR>
+
+set clipboard=unnamedplus
+
+" " DARK
+" highlight Visual      ctermbg=240              cterm=bold
+" highlight CocFloating ctermbg=235              cterm=bold
+" highlight Search      ctermbg=214  ctermfg=232
+
+" LIGHT
+highlight Visual      ctermbg=226              cterm=bold
+highlight CocFloating ctermbg=214              cterm=bold
+highlight Search      ctermbg=214  ctermfg=232
