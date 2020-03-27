@@ -114,6 +114,9 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=true
 # # bindkey -M vicmd 'k' history-substring-search-up
 # # bindkey -M vicmd 'j' history-substring-search-down
 
+# Add `pip install`-ed Python executables to PATH
+export PATH="$HOME/.asdf/installs/python/$(python --version | cut -d ' ' -f 2)/bin:$PATH"
+
 # Deduplicate $PATH
 typeset -U PATH
 
