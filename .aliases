@@ -48,5 +48,5 @@ alias demo='docker-compose -f ~/work/demo/multi_demo/docker-compose.yml'
 # apps
 alias ngrok='~/apps/ngrok'
 
-alias notes='touch ~/Documents/notes/$(date +"%Y-%m-%d").md && vim ~/Documents/notes/$(date +"%Y-%m-%d").md'
+alias notes='touch ~/Documents/notes/$(date +"%Y-%m-%d").md && if [ ! -s ~/Documents/notes/$(date +"%Y-%m-%d").md ]; then echo "# $(date +"%a %d %b %Y")" >> ~/Documents/notes/$(date +"%Y-%m-%d").md; fi && echo "\n## $(date +"%H:%M")\n" >> ~/Documents/notes/$(date +"%Y-%m-%d").md && vim ~/Documents/notes/$(date +"%Y-%m-%d").md'
 alias note='notes'
