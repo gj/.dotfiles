@@ -41,9 +41,9 @@ alias rust='cd ~/code/rust'
 alias prolog='cd ~/code/prolog'
 
 # Oso
-alias oso='cd ~/work'
-alias work='cd ~/work'
-alias demo='cd ~/work/demo'
+alias oso='cd ~/work/demo'
+alias work='cd ~/work/demo'
+alias demo='docker-compose -f ~/work/demo/multi_demo/docker-compose.yml'
 
 # apps
 alias ngrok='~/apps/ngrok'
