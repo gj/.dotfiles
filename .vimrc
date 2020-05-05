@@ -235,12 +235,16 @@ nmap <leader>n :CocCommand explorer<CR>
 
 set clipboard=unnamedplus
 
-" " DARK
-" highlight Visual      ctermbg=240              cterm=bold
-" highlight CocFloating ctermbg=235              cterm=bold
+" DARK
+highlight Visual      ctermbg=240              cterm=bold
+highlight CocFloating ctermbg=235              cterm=bold
+highlight Search      ctermbg=214  ctermfg=232
+
+" " LIGHT
+" highlight Visual      ctermbg=226              cterm=bold
+" highlight CocFloating ctermbg=214              cterm=bold
 " highlight Search      ctermbg=214  ctermfg=232
 
-" LIGHT
-highlight Visual      ctermbg=226              cterm=bold
-highlight CocFloating ctermbg=214              cterm=bold
-highlight Search      ctermbg=214  ctermfg=232
+autocmd BufRead,BufNewFile *.polar set filetype=polar
+autocmd BufRead,BufNewFile *.pol set filetype=polar
+autocmd FileType polar setlocal shiftwidth=4 tabstop=4 expandtab
