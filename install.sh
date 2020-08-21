@@ -32,3 +32,4 @@ ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
 ln -sfv "$DOTFILES_DIR/.vimrc" ~
 ln -sfv "$DOTFILES_DIR/.zshrc" ~
 mkdir -p ~/.config && ln -sfv "$DOTFILES_DIR/starship.toml" ~/.config
+mkdir -p ~/.vim && ln -sfv "$DOTFILES_DIR/coc-settings.json" ~/.vim

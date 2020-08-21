@@ -1,0 +1,30 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "elixir", "javascript", "typescript", "python"],
+  "prettier.arrowParens": "avoid",
+  "prettier.requireConfig": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+
+  "python.jediEnabled": false,
+  "python.formatting.provider": "black",
+
+  "rust-analyzer.callInfo.full": true,
+  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.checkOnSave.allFeatures": true,
+  "rust-analyzer.checkOnSave.allTargets": true,
+  "rust-analyzer.inlayHints.chainingHints": true,
+  "rust-analyzer.lens.enable": true,
+  "rust-analyzer.lens.run": true,
+
+  "solargraph.autoformat": true,
+  "solargraph.completion": true,
+  "solargraph.definitions": true,
+  "solargraph.diagnostics": true,
+  "solargraph.folding": true,
+  "solargraph.formatting": true,
+  "solargraph.hover": true,
+  "solargraph.references": true,
+  "solargraph.rename": true,
+  "solargraph.symbols": true
+}
