@@ -10,7 +10,7 @@ zstyle ':completion:*' rehash true
 zstyle :compinstall filename '/home/gj/.zshrc'
 setopt COMPLETE_ALIASES
 
-. $HOME/.asdf/asdf.sh
+. /usr/local/opt/asdf/asdf.sh
 
 # Nicer history
 export HISTSIZE=100000
@@ -46,10 +46,7 @@ bindkey -e
 
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
-# export FZF_DEFAULT_COMMAND='
-#   (git ls-tree -r --name-only HEAD ||
-#     fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/) 2> /dev/null'
-export FZF_DEFAULT_COMMAND='fdfind --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ --exclude _build/ 2> /dev/null'
+export FZF_DEFAULT_COMMAND='fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ --exclude _build/ 2> /dev/null'
 export FZF_DEFAULT_OPTS='--ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -119,8 +116,9 @@ export PATH="$HOME/.asdf/installs/python/$(python --version | cut -d ' ' -f 2)/b
 
 export PATH="$PATH:/usr/local/go/bin"
 
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$PATH:/opt/apache-maven-3.6.3/bin"
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export JAVA_HOME="/usr/local/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
 
 # Deduplicate $PATH
 typeset -U PATH

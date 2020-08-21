@@ -16,7 +16,6 @@ alias cat=bat
 alias l='exa -la --git'
 alias tree='exa -a --git-ignore --tree --ignore-glob="node_modules|.git|.mypy_cache|.cache|__pycache__|.pytest_cache|target|venv|_static|_build|tmp|_api_docs" --color=always | less -R'
 alias t=tree
-alias fd=fdfind
 
 # Docker
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"'

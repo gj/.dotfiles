@@ -243,7 +243,7 @@ hi HighlightedyankRegion cterm=bold
 
 nmap <leader>n :CocCommand explorer<CR>
 
-set clipboard=unnamedplus
+set clipboard^=unnamed
 
 " DARK
 highlight Visual      ctermbg=240              cterm=bold
