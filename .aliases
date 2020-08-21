@@ -13,8 +13,8 @@ alias be='bundle exec'
 alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
 alias -- -='cd -'
 alias cat=bat
-alias l='exa -la --git --group-directories-first'
-alias tree='exa -a --git-ignore --group-directories-first --tree --ignore-glob="node_modules|.git|.mypy_cache|.cache|__pycache__|.pytest_cache|target|venv|_static" --color=always | less -R'
+alias l='exa -la --git'
+alias tree='exa -a --git-ignore --tree --ignore-glob="node_modules|.git|.mypy_cache|.cache|__pycache__|.pytest_cache|target|venv|_static|_build|tmp|_api_docs" --color=always | less -R'
 alias t=tree
 alias fd=fdfind
 
@@ -27,8 +27,7 @@ alias vimrc='vim ~/.vimrc'
 alias zshrc='vim ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias dotfiles='cd ~/.dotfiles'
-alias http='ruby -run -e httpd -- -p 5000 .'
-alias https='hs --ssl --cert ~/.ssl/localhost.crt --key ~/.ssl/localhost.key -a localhost -o'
+alias http='ruby -run -e httpd -- -p 5000'
 
 # Hidden File Visibility
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
@@ -41,8 +40,7 @@ alias rust='cd ~/code/rust'
 alias prolog='cd ~/code/prolog'
 
 # Oso
-alias oso='cd ~/work/demo'
-alias work='cd ~/work/demo'
+alias work='cd ~/work/oso'
 alias demo='docker-compose -f ~/work/demo/multi_demo/docker-compose.yml'
 
 # apps
