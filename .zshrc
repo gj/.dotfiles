@@ -53,15 +53,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-[[ -d $HOME/.zsh_functions ]] && fpath=( $HOME/.zsh_functions "${fpath[@]}" )
-
-if [ -d $HOME/.zsh_functions ]; then
-  for FUNCTION in $(/bin/ls $HOME/.zsh_functions)
-  do
-    autoload -Uz $FUNCTION
-  done
-fi
-
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"

@@ -31,5 +31,4 @@ ln -sfv "$DOTFILES_DIR/.rspec" ~
 ln -sfv "$DOTFILES_DIR/.tmux.conf" ~
 ln -sfv "$DOTFILES_DIR/.vimrc" ~
 ln -sfv "$DOTFILES_DIR/.zshrc" ~
-ln -sfv "$DOTFILES_DIR/.zsh_functions" ~
 mkdir -p ~/.config && ln -sfv "$DOTFILES_DIR/starship.toml" ~/.config
