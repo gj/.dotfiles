@@ -25,17 +25,17 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
-  Plug 'liuchengxu/space-vim-theme'
+  Plug 'romainl/flattened'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'vim-test/vim-test'
 call plug#end()
 
 " COLORSCHEME
-colorscheme space_vim_theme
-let g:space_vim_italic = 1
-let g:space_vim_italicize_strings = 1
-let g:airline_theme='angr'
-set background=dark
+set background=light
+colorscheme flattened_light
+" set background=dark
+" colorscheme flattened_dark
+let g:airline_theme='solarized'
 
 " Random stuff from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 set history=10000
