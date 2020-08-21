@@ -49,7 +49,7 @@ bindkey -e
 # export FZF_DEFAULT_COMMAND='
 #   (git ls-tree -r --name-only HEAD ||
 #     fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/) 2> /dev/null'
-export FZF_DEFAULT_COMMAND='fdfind --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ 2> /dev/null'
+export FZF_DEFAULT_COMMAND='fdfind --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ --exclude _build/ 2> /dev/null'
 export FZF_DEFAULT_OPTS='--ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -116,6 +116,11 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 # Add `pip install`-ed Python executables to PATH
 export PATH="$HOME/.asdf/installs/python/$(python --version | cut -d ' ' -f 2)/bin:$PATH"
+
+export PATH="$PATH:/usr/local/go/bin"
+
+export PATH="$PATH:/opt/apache-maven-3.6.3/bin"
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 
 # Deduplicate $PATH
 typeset -U PATH

@@ -13,3 +13,6 @@ style = "bold yellow"
 
 [package]
 disabled = true
+
+[cmd_duration]
+style = "bold blue"

@@ -15,15 +15,27 @@ call plug#begin('~/.vim/vim-plugins')
   Plug 'rust-lang/rust.vim',           { 'for': ['rust'] }
   Plug 'soli/prolog-vim',              { 'for': ['prolog'] }
   Plug 'cespare/vim-toml',             { 'for': ['toml'] }
+  Plug 'elixir-editors/vim-elixir',    { 'for': ['elixir'] }
+  Plug 'vim-ruby/vim-ruby',            { 'for': ['ruby'] }
 
-  Plug 'junegunn/fzf',                 { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'vim-scripts/tComment'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-surround'
+  Plug 'liuchengxu/space-vim-theme'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'vim-test/vim-test'
 call plug#end()
+
+" COLORSCHEME
+colorscheme space_vim_theme
+let g:space_vim_italic = 1
+let g:space_vim_italicize_strings = 1
+let g:airline_theme='angr'
+set background=dark
 
 " Random stuff from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 set history=10000
@@ -58,10 +70,6 @@ if has("autocmd") " http://vimcasts.org/episodes/updating-your-vimrc-file-on-the
   autocmd! bufwritepost .vimrc source $MYVIMRC " Source the vimrc file after saving it
 endif
 
-nnoremap  <C-j> <C-w>j
-nnoremap  <C-k> <C-w>k
-nnoremap  <C-h> <C-w>h
-nnoremap  <C-l> <C-w>l
 nnoremap c<C-j> :bel sp new<cr>
 nnoremap c<C-k> :abo sp new<cr>
 nnoremap c<C-h> :lefta vsp new<cr>
@@ -157,14 +165,13 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%', '~'),
   \   <bang>0)
 nnoremap <leader>a :Rg<cr>
 
 let loaded_netrwPlugin = 1 " Don't load netrw plugin
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme='angr'
 let g:airline_mode_map = {
       \ '__'     : '-',
       \ 'c'      : 'C',
@@ -218,11 +225,14 @@ let g:airline#extensions#wordcount#filetypes =
 " rust.vim
 let g:rustfmt_autosave = 1
 " let g:rust_fold = 1
+nnoremap <leader>a :Rg<cr>
+autocmd FileType rust nnoremap <buffer> <leader>t :vert :RustTest -- --nocapture<cr>
+autocmd FileType rust nnoremap <buffer> <leader>tl :vert :RustTest -- --nocapture<cr>
+autocmd FileType rust nnoremap <buffer> <leader>tj :RustTest -- --nocapture<cr>
 
-" Detect .pl files as Prolog instead of Perl
-let g:filetype_pl="prolog"
-" Why doesn't Vim autodetect TOML files?
-let g:filetype_toml="toml"
+let g:filetype_pl="prolog" " Detect .pl files as Prolog instead of Perl
+let g:filetype_toml="toml" " Why doesn't Vim autodetect TOML files?
+au BufRead,BufNewFile *.lalrpop set syntax=rust
 
 highlight CursorLine cterm=bold
 highlight CursorLineNr cterm=bold
@@ -237,7 +247,7 @@ set clipboard=unnamedplus
 
 " DARK
 highlight Visual      ctermbg=240              cterm=bold
-highlight CocFloating ctermbg=235              cterm=bold
+highlight CocFloating ctermbg=232              cterm=bold
 highlight Search      ctermbg=214  ctermfg=232
 
 " " LIGHT
@@ -245,6 +255,17 @@ highlight Search      ctermbg=214  ctermfg=232
 " highlight CocFloating ctermbg=214              cterm=bold
 " highlight Search      ctermbg=214  ctermfg=232
 
-autocmd BufRead,BufNewFile *.polar set filetype=polar
-autocmd BufRead,BufNewFile *.pol set filetype=polar
-autocmd FileType polar setlocal shiftwidth=4 tabstop=4 expandtab
+set fillchars+=vert:│
+hi VertSplit cterm=bold
+
+nnoremap <leader>c :CocCommand<cr>
+
+let test#strategy = "vimterminal"
+" let test#vim#term_position = "vert"
+nnoremap <silent> tt :TestNearest<CR>
+nnoremap <silent> tf :TestFile<CR>
+nnoremap <silent> ts :TestSuite<CR>
+nnoremap <silent> tl :TestLast<CR>
+nnoremap <silent> tv :TestVisit<CR>
+
+au FocusGained,BufEnter * :checktime
