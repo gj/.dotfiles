@@ -16,8 +16,10 @@ fi
 ln -sfv "$DOTFILES_DIR/.ackrc" ~
 ln -sfv "$DOTFILES_DIR/.agignore" ~
 ln -sfv "$DOTFILES_DIR/.aliases" ~
+ln -sfv "$DOTFILES_DIR/.asdfrc" ~
 ln -sfv "$DOTFILES_DIR/.ctags" ~
 ln -sfv "$DOTFILES_DIR/.curlrc" ~
+ln -sfv "$DOTFILES_DIR/.default-gems" ~
 ln -sfv "$DOTFILES_DIR/.editorconfig" ~
 ln -sfv "$DOTFILES_DIR/.gemrc" ~
 ln -sfv "$DOTFILES_DIR/.gitconfig" ~

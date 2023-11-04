@@ -14,11 +14,11 @@
       cat = "${pkgs.bat}/bin/bat";
       dotfiles = "cd ~/.dotfiles";
       hb = "${pkgs.hub}/bin/hub browse";
-      l = "${pkgs.exa}/bin/exa -la --git";
+      l = "${pkgs.eza}/bin/eza -la --git";
       mkdir = "mkdir -p";
       path = "echo $PATH | tr -s ':' '\n'";
       reload = "source ~/.zshrc";
-      tree = "${pkgs.exa}/bin/exa -a --git-ignore --tree --ignore-glob='node_modules|.git|.mypy_cache|.cache|__pycache__|.pytest_cache|target|venv|_static|_build|tmp|_api_docs' --color=always | less -R";
+      tree = "${pkgs.eza}/bin/eza -a --git-ignore --tree --ignore-glob='node_modules|.git|.mypy_cache|.cache|__pycache__|.pytest_cache|target|venv|_static|_build|tmp|_api_docs' --color=always | less -R";
       vimrc = "${pkgs.vim-darwin}/bin/vim ~/.vimrc";
       work = "cd ~/work";
       zshrc = "${pkgs.vim-darwin}/bin/vim ~/.zshrc";
@@ -42,7 +42,7 @@
       # pkgs.darwin.apple_sdk.frameworks.Security
       pkgs.direnv
       pkgs.enchant
-      pkgs.exa
+      pkgs.eza
       pkgs.fd
       pkgs.fzf
       pkgs.gettext # for python
@@ -59,13 +59,14 @@
       pkgs.parallel
       pkgs.pv
       pkgs.pstree
-      pkgs.readline81
+      pkgs.readline82
       pkgs.ripgrep
       pkgs.shellcheck
       pkgs.sqlite
       pkgs.starship
       pkgs.vim-darwin
       pkgs.wget
+      pkgs.xz # for installing Python via pyenv via ASDF
       pkgs.yq-go
     ];
 
@@ -99,8 +100,8 @@
   };
 
   networking = {
-    computerName = "z";
-    hostName = "z";
+    computerName = "work";
+    hostName = "work";
   };
 
   nix = {
@@ -131,7 +132,7 @@
         # Use Nix-managed zsh. # can't do this until tmux-status is in this shell
         # set-option -g default-shell "${pkgs.zsh}/bin/zsh"
 
-        ${builtins.readFile "/Users/gj/.tmux.conf"}
+        ${builtins.readFile "/Users/g/.tmux.conf"}
       '';
     };
   };
@@ -216,7 +217,7 @@
       };
 
       screencapture = {
-        location = "/Users/gj/Pictures";
+        location = "/Users/g/Pictures";
         disable-shadow = true;
       };
 
