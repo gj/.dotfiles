@@ -1,4 +1,9 @@
 add_newline = false
+# format = ""
+
+# [character]
+# success_symbol = '[➜](green)'
+# error_symbol = '[➜](red)'
 
 [battery]
 full_symbol = "🔋"
@@ -16,3 +21,6 @@ disabled = true
 
 [cmd_duration]
 style = "bold blue"
+
+# [directory]
+# disabled = true

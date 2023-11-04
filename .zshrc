@@ -1,26 +1,26 @@
-# Enable shell history in IEx
-export ERL_AFLAGS="-kernel shell_history enabled"
+# # Enable shell history in IEx
+# export ERL_AFLAGS="-kernel shell_history enabled"
+#
+# fpath=(${ASDF_DIR}/completions $fpath)
 
-# Initialize completion
-autoload -Uz compinit && compinit -D
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' completer _expand _complete _ignored
-zstyle ':completion:*' max-errors 1
-zstyle ':completion:*' rehash true
-zstyle :compinstall filename '/home/gj/.zshrc'
-setopt COMPLETE_ALIASES
+# # Initialize completion
+# autoload -Uz compinit && compinit -D
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# zstyle ':completion:*' completer _expand _complete _ignored
+# zstyle ':completion:*' max-errors 1
+# zstyle ':completion:*' rehash true
+# zstyle :compinstall filename '/home/gj/.zshrc'
+# setopt COMPLETE_ALIASES
 
-. /usr/local/opt/asdf/asdf.sh
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+source "${HOME}/.asdf/asdf.sh"
+. ~/.asdf/plugins/java/set-java-home.zsh # Set JAVA_HOME
 
 # Nicer history
 export HISTSIZE=100000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
-
-# Stop wget from creating ~/.wget-hsts file. I don't care about HSTS (HTTP
-# Strict Transport Security) for wget; it's not as if I'm logging into my bank
-# with it.
-alias wget='wget --no-hsts'
 
 # Use vim as the editor
 export VISUAL=vim
@@ -30,28 +30,22 @@ export EDITOR="$VISUAL"
 # Narrow that down to allow easier skipping through words via M-f and M-b.
 export WORDCHARS='*?[]~&;!$%^<>'
 
-# Highlight search results in ack.
-export ACK_COLOR_MATCH='red'
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# # Highlight search results in ack.
+# export ACK_COLOR_MATCH='red'
 
 # Ignore commands prefixed with a space (great for not accidentally storing secrets in your shell history file
 setopt histignorespace
-
-# For GPG setup
-export GPG_TTY=$(tty)
 
 # https://stackoverflow.com/a/23314326
 bindkey -e
 
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
-export FZF_DEFAULT_COMMAND='fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ --exclude _build/ 2> /dev/null'
+# export FZF_DEFAULT_COMMAND='fd --type f --color=always --hidden --follow --exclude .git/ --exclude node_modules/ --exclude target/ --exclude vendor/ --exclude _build/ 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_DEFAULT_OPTS='--ansi'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export PATH="$HOME/.cargo/bin:$PATH"
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -91,31 +85,45 @@ zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"
 # Configure ZSH Autosuggestions
 export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
-# bindkey '^ ' autosuggest-accept
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#3c6a76"
 
-# # # Enable ZSH History Substring Search
-# # source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-# # bindkey '^[[A' history-substring-search-up
-# # bindkey '^[[B' history-substring-search-down
-# # bindkey -M emacs '^P' history-substring-search-up
-# # bindkey -M emacs '^N' history-substring-search-down
-# # bindkey -M vicmd 'k' history-substring-search-up
-# # bindkey -M vicmd 'j' history-substring-search-down
-
-# Add `pip install`-ed Python executables to PATH
-export PATH="$HOME/.asdf/installs/python/$(python --version | cut -d ' ' -f 2)/bin:$PATH"
-
-export PATH="$PATH:/usr/local/go/bin"
-
-export PATH="/usr/local/opt/openjdk/bin:$PATH"
-export PATH="$PATH:/opt/apache-maven-3.6.3/bin"
-export JAVA_HOME="/usr/local/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
-
-# Deduplicate $PATH
-typeset -U PATH
+# export PATH="/usr/local/opt/openjdk/bin:$PATH"
+# export PATH="$PATH:/opt/apache-maven-3.6.3/bin"
+# export JAVA_HOME="/usr/local/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
 
 function set_win_title(){
     echo -ne "\033]0; $PWD \007"
 }
 precmd_functions+=(set_win_title)
 eval "$(starship init zsh)"
+
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# https://github.com/LnL7/nix-darwin/issues/158#issuecomment-769360869
+no_darwin_in_path="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
+if [[ $NIX_PATH = $no_darwin_in_path ]]; then
+  source_darwin=$(awk 'c&&!--c;/__NIX_DARWIN_SET_ENVIRONMENT_DONE/{c=1}' /etc/zshenv)
+  eval $source_darwin
+fi
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# export PATH="/usr/local/opt/openjdk/bin:$PATH"
+# export PATH="$PATH:/opt/apache-maven-3.8.1/bin"
+# export JAVA_HOME="/usr/local/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
+export PATH="/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
+
+# export PATH="/usr/local/go/bin:$PATH"
+
+# export PATH="$HOME/Downloads/pypy3.6-v7.3.2-osx64/bin:$PATH"
+
+export FLYCTL_INSTALL="/Users/gj/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# Deduplicate $PATH
+typeset -U PATH
+
+eval "$(direnv hook zsh)"

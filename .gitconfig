@@ -1,25 +1,19 @@
 [alias]
-  a  = add
-  ap = add --patch
   b  = branch
   bs = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
-  c  = commit
-  cm = commit -m
   co = checkout
-  cp = cherry-pick -x
   d  = diff
   ds = diff --staged
   l  = log --pretty=colored --graph
   lt = log --pretty=colored-tags --graph
-  pa = pull --all
-  ri = rebase -i
   st = status
+  root = rev-parse --show-toplevel
 [pretty]
   colored = format:%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset
   colored-tags = format:%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)%an%C(bold red)%d%Creset
 [user]
   name = Gabe Jackson
-  email = gj@mail.co.de
+  email = 17556281+gj@users.noreply.github.com
 [pull]
   rebase = true
 [push]
@@ -50,3 +44,7 @@
 [gpg]
   program = gpg
 
+[init]
+	defaultBranch = main
+[rerere]
+	enabled = true

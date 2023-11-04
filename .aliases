@@ -1,49 +1,16 @@
-alias Desktop='cd ~/Desktop'
-alias desktop='cd ~/Desktop'
-alias desk='cd ~/Desktop'
-alias Downloads='cd ~/Downloads'
-alias downloads='cd ~/Downloads'
-alias down='cd ~/Downloads'
-
-alias path='echo $PATH | tr -s ":" "\n"'
-alias v='vim'
-alias v.='vim .'
-alias hb='hub browse'
-alias be='bundle exec'
 alias brewup='brew update; brew upgrade; brew cleanup; brew doctor'
-alias -- -='cd -'
-alias cat=bat
-alias l='exa -la --git'
-alias tree='exa -a --git-ignore --tree --ignore-glob="node_modules|.git|.mypy_cache|.cache|__pycache__|.pytest_cache|target|venv|_static|_build|tmp|_api_docs" --color=always | less -R'
-alias t=tree
 
 # Docker
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"'
 alias dc='docker-compose'
 
-alias mkdir='mkdir -p'
-alias vimrc='vim ~/.vimrc'
-alias zshrc='vim ~/.zshrc'
-alias reload='source ~/.zshrc'
-alias dotfiles='cd ~/.dotfiles'
-alias http='ruby -run -e httpd -- -p 5000'
-
-# Hidden File Visibility
-alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
-
-# Rust
-alias rust='cd ~/code/rust'
-
-# Prolog
-alias prolog='cd ~/code/prolog'
-
-# Oso
-alias work='cd ~/work/oso'
-alias demo='docker-compose -f ~/work/demo/multi_demo/docker-compose.yml'
-
-# apps
-alias ngrok='~/apps/ngrok'
+# alias http='ruby -run -e httpd -- -p 5000'
 
 alias notes='touch ~/Documents/notes/$(date +"%Y-%m-%d").md && if [ ! -s ~/Documents/notes/$(date +"%Y-%m-%d").md ]; then echo "# $(date +"%a %d %b %Y")" >> ~/Documents/notes/$(date +"%Y-%m-%d").md; fi && echo "\n## $(date +"%H:%M")\n" >> ~/Documents/notes/$(date +"%Y-%m-%d").md && vim ~/Documents/notes/$(date +"%Y-%m-%d").md'
 alias note='notes'
+
+alias redis='redis-server /usr/local/etc/redis.conf'
+
+for i in {10..15}; do
+  alias node${i}="npx node@${i}"
+done
